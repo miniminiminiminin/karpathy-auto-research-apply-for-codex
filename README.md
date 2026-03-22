@@ -2,6 +2,8 @@
 
 A concept repository for running purpose-driven auto-research loops with Codex.
 
+Korean README: [README.ko.md](README.ko.md)
+
 The core idea is simple:
 
 - write a clear `purpose.txt`
