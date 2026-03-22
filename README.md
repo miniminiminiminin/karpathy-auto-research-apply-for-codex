@@ -4,6 +4,17 @@ A concept repository for running purpose-driven auto-research loops with Codex.
 
 Korean README: [README.ko.md](README.ko.md)
 
+## Credit
+
+This repository is inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch), Andrej Karpathy's public experiment in autonomous iterative research on a compact training setup.
+
+This repo does not mirror that codebase directly. Instead, it adapts the core operating idea into a Codex-oriented scaffold centered on:
+
+- `purpose.txt` as the objective
+- one-shot rubric generation
+- locked evaluation during the run
+- repeatable improve/execute/score/keep loops
+
 The core idea is simple:
 
 - write a clear `purpose.txt`

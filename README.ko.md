@@ -2,6 +2,17 @@
 
 Codex로 목적 기반 auto-research 루프를 굴리기 위한 컨셉 저장소입니다.
 
+## 크레딧
+
+이 저장소는 Andrej Karpathy의 공개 실험 저장소인 [karpathy/autoresearch](https://github.com/karpathy/autoresearch)에서 아이디어를 얻었습니다.
+
+다만 이 레포는 원본 코드를 그대로 옮긴 것이 아니라, 그 핵심 운영 아이디어를 Codex 중심의 scaffold로 재해석한 것입니다. 구체적으로는 아래에 초점을 둡니다.
+
+- 목표를 담는 `purpose.txt`
+- 1회성 rubric 생성
+- 실행 중 rubric 고정
+- 반복 가능한 개선/실행/채점/유지 루프
+
 핵심 아이디어는 단순합니다.
 
 - 명확한 `purpose.txt`를 작성한다
