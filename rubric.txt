@@ -1,0 +1,30 @@
+Repository Quality Rubric for This Concept Scaffold
+
+1. Concept clarity
+- Does the repository clearly explain the relationship between purpose, rubric, and execution loop?
+- Is the distinction between repo-level docs and scaffold-level execution obvious?
+
+2. Execution contract clarity
+- Can a user understand when `rubric.txt` may be generated and when it becomes immutable?
+- Does the scaffold define concrete logs, outputs, and keep/discard rules?
+
+3. Reusability
+- Can a downstream user adapt the scaffold with minimal editing?
+- Are templates and placeholders explicit instead of hidden in prose?
+
+4. Honesty of claims
+- Does the repo avoid overstating automation that is not actually implemented?
+- Are current limitations stated plainly?
+
+5. Extensibility
+- Can domain-specific rubric variants be added without breaking the core contract?
+- Does the scaffold preserve a stable core while allowing purpose-specific extensions?
+
+6. Documentation quality
+- Are the starting steps easy to follow?
+- Are the main rules visible in the right files?
+
+Scoring guidance:
+- Strong: the repo is understandable and reusable without extra explanation.
+- Medium: the concept is promising but some workflow steps still rely on interpretation.
+- Weak: the purpose/rubric/run model remains ambiguous or internally inconsistent.

@@ -1,0 +1,1 @@
+[Create a reusable Codex-oriented scaffold for purpose-driven auto-research loops, with one-shot rubric generation and locked evaluation during execution.]
