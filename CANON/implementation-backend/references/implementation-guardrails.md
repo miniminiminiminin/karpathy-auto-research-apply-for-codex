@@ -1,0 +1,13 @@
+# Backend Implementation Guardrails
+
+```text
+GUARDRAILS := PASS IF
+  contract_and_boundary_behavior_are_defined_before_implementation_detail
+  AND side_effects_are_isolated_at_explicit_runtime_edges_or_adapters
+  AND null_empty_timeout_duplicate_and_partial_failure_cases_are_treated_as_first_class_work
+
+FAIL IF
+  delivery_logic_widens_into_architecture
+  OR migration_strategy_is_required_but_missing
+  OR cross_consumer_redesign_is_smuggled_into_implementation
+```

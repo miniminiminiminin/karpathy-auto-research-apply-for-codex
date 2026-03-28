@@ -1,0 +1,43 @@
+{
+  "name": "book-chapter",
+  "mode": "sequential",
+  "final_output": "final.md",
+  "stages": [
+    {
+      "id": "architect",
+      "prompt_file": "prompts/01-architect.md",
+      "output_file": "01-architect.md",
+      "use_previous_output": false
+    },
+    {
+      "id": "writer",
+      "prompt_file": "prompts/02-writer.md",
+      "output_file": "02-writer.md",
+      "use_previous_output": true
+    },
+    {
+      "id": "analyst",
+      "prompt_file": "prompts/03-analyst.md",
+      "output_file": "03-analyst.md",
+      "use_previous_output": true
+    },
+    {
+      "id": "quant",
+      "prompt_file": "prompts/04-quant.md",
+      "output_file": "04-quant.md",
+      "use_previous_output": true
+    },
+    {
+      "id": "risk-editor",
+      "prompt_file": "prompts/05-risk-editor.md",
+      "output_file": "05-risk-editor.md",
+      "use_previous_output": true
+    },
+    {
+      "id": "mentor",
+      "prompt_file": "prompts/06-mentor.md",
+      "output_file": "06-mentor.md",
+      "use_previous_output": true
+    }
+  ]
+}
