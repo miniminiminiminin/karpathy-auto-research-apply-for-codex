@@ -33,6 +33,10 @@ Choose the minimum viable next route. If one direct skill fits cleanly, do not e
 </NON-NEGOTIABLE>
 
 <NON-NEGOTIABLE>
+If the user explicitly asks for subagents, delegation, parallel evaluation, or orchestration, you MUST make the orchestration decision explicit. Route to `multi-agent-orchestration` unless you can record a concrete no-fan-out reason that keeps one direct owner clearly superior.
+</NON-NEGOTIABLE>
+
+<NON-NEGOTIABLE>
 Every run must declare its exact local `assets/` and `references/` set before execution, read the required files before routing, and record why each declared file was loaded.
 Unnamed support files are out of contract and must not be relied on.
 If no support files are needed, say `none` explicitly. Final outputs must report the declared set, the files actually read, and the files actually used.
@@ -71,6 +75,10 @@ These thoughts mean STOP: you're rationalizing.
 ```text
 IF outcome IS unclear OR boundary IS unclear OR owner IS unclear:
   ROUTE -> intake-and-routing
+ELSE IF user_explicitly_requests_subagents OR delegation OR parallel_evaluation OR orchestration:
+  ROUTE -> multi-agent-orchestration
+ELSE IF multiple_owned_outcomes_can_progress_in_parallel OR multiple_independent_tracks_are_present:
+  ROUTE -> multi-agent-orchestration
 ELSE IF request_implies_new_behavior OR new_feature_direction:
   ROUTE -> product-and-ux BEFORE planning_or_architecture_or_implementation
 ELSE IF creative_work_or_behavior_change_is_present_even_if_small:
@@ -81,8 +89,6 @@ ELSE IF evidence_is_incomplete OR acceptance_risk dominates:
   ROUTE -> quality-and-review
 ELSE IF request_is_repo_wide_canon_revision OR skill_system_absorption OR multi_owner_skill_maintenance:
   ROUTE -> skillsmith
-ELSE IF multiple_owned_outcomes_can_progress_in_parallel:
-  ROUTE -> multi-agent-orchestration
 ELSE:
   ROUTE -> the_single_best_direct_skill
 ```
@@ -99,8 +105,11 @@ ELSE:
 7. RECORD(missing_inputs := approval OR boundary OR proof_expectation OR design_decision OR stakeholder_owner OR severity)
 7A. CLASSIFY(request_scale := single_owner_single_batch OR single_owner_multi_batch OR mixed_owner_multi_batch)
 7B. RECORD(active_batch_now, parked_follow_ups, decomposition_seam) IF request_spans_multiple_owners_or_is_oversized
-8. ROUTE -> product-and-ux IF request_implies_new_behavior OR new_feature_direction AND direction_or_approval_is_not_explicit
-8A. ROUTE -> skillsmith IF request_is_repo_wide_canon_revision OR skill_system_absorption OR owner_split_is_the_real_work
+7C. RECORD(orchestration_trigger, no_fan_out_reason) IF user_explicitly_requests_subagents OR delegation OR parallel_evaluation OR orchestration OR multiple_independent_tracks_are_present
+8. ROUTE -> multi-agent-orchestration IF user_explicitly_requests_subagents OR delegation OR parallel_evaluation OR orchestration
+8A. ROUTE -> multi-agent-orchestration IF multiple_owned_outcomes_can_progress_in_parallel OR multiple_independent_tracks_are_present
+8B. ROUTE -> product-and-ux IF request_implies_new_behavior OR new_feature_direction AND direction_or_approval_is_not_explicit AND orchestration_is_not_the_active_question
+8C. ROUTE -> skillsmith IF request_is_repo_wide_canon_revision OR skill_system_absorption OR owner_split_is_the_real_work AND orchestration_is_not_the_active_question
 9. ASK(one_focused_question) IF material_ambiguity_remains = TRUE
 10. CHOOSE(one_next_skill)
 11. RECORD(why_alternatives_lost_now IN assets/intake-record.md OR assets/routing-decision.md)
@@ -131,6 +140,7 @@ Return an intake record with:
 - target outcome and success condition
 - current constraints and explicit non-goals
 - request scale and decomposition seam
+- orchestration trigger and no-fan-out reason when orchestration was materially considered
 - missing boundary or evidence
 - active batch now and parked follow-ups when the request is oversized
 - considered next skills

@@ -16,7 +16,10 @@ CHANGE := {
   owner,
   parent_plan,
   impact_scope,
-  route_or_component
+  route_or_component,
+  primary_seam_count,
+  adjacent_surface_changes,
+  reroute_trigger_when_change_radius_grew
 }
 
 FILES := {
@@ -37,6 +40,9 @@ BEHAVIOR := {
 DELIVERY := {
   work_completed,
   assumptions,
+  split_trigger_waiver_id,
+  split_trigger_waiver_owner,
+  split_trigger_waiver_expiry_or_recheck_trigger,
   required_follow_up,
   receiving_owner
 }
@@ -61,12 +67,17 @@ PASS IF
   AND SUPPORT.files_read_before_coding
   AND SUPPORT.why_each_file_was_loaded
   AND CHANGE.route_or_component
+  AND CHANGE.primary_seam_count
   AND BEHAVIOR.critical_states
   AND VERIFICATION.command
   AND DELIVERY.receiving_owner
 
 FAIL IF
   SUPPORT.files_actually_used IS missing
+  OR CHANGE.primary_seam_count IS implicit
+  OR CHANGE.primary_seam_count > 1 AND CHANGE.reroute_trigger_when_change_radius_grew IS missing
+  OR DELIVERY.split_trigger_waiver_id IS present AND DELIVERY.split_trigger_waiver_owner IS missing
+  OR DELIVERY.split_trigger_waiver_id IS present AND DELIVERY.split_trigger_waiver_expiry_or_recheck_trigger IS missing
   OR BEHAVIOR.accessibility_impact IS implicit
   OR VERIFICATION.result IS implicit
 ```

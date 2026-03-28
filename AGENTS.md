@@ -1,12 +1,12 @@
 # Root Repository Contract
 
-This repository owns the public concept, the reusable scaffold, and the Canon packages that downstream projects will copy.
+This repository owns the public concept and the Canon packages that downstream projects will copy.
 
 ## Root Scope
 
 - The repository root defines the concept and the reusable operating law.
-- `research-scaffold/` is the copied project shell that downstream users operate.
-- Root documentation must describe the scaffold honestly and keep the purpose-first loop explicit.
+- `CANON/` is the primary source of truth for reusable operating law, reusable scaffold packaging, and downstream-copy behavior.
+- Root documentation must describe the package-only scaffold model honestly and keep the purpose-first loop explicit.
 
 ## Purpose-First Rule
 
@@ -21,12 +21,13 @@ That means:
 
 ## Repository Responsibilities
 
-- keep `research-scaffold/` usable as a control-plane plus `project/` worktree shell
+- keep the Canon-owned scaffold package usable as a control-plane plus `project/` worktree shell
 - keep Canon routing broad, explicit, and reusable
-- separate live scaffold state from reusable Canon assets
+- separate reusable scaffold package state from reusable Canon operating law
 - avoid overstating automation that is not actually implemented
-- when root `CANON/` changes are intended for downstream reuse, reflect them into `research-scaffold/CANON/`
+- keep reusable scaffold-source assets under `CANON/**` rather than depending on sibling explanation outside Canon
 - keep deferred hardening explicit instead of claiming source-absorption closure means perfect finality
+- keep orchestration and subagent-use rules inside Canon strongly enough that operators do not need scaffold prose to know when delegation is required
 
 ## Downstream Model
 
@@ -40,11 +41,11 @@ The copied scaffold should support:
 6. promote only verified iterations
 7. release when the application is ready enough
 
-## Canon Sync Rule
+## Canon Packaging Rule
 
 - Treat root `CANON/` as the reusable upstream source of truth for scaffold shipping.
-- Keep `research-scaffold/CANON/` aligned when the intent is to publish or refresh the scaffold.
-- Do not claim scaffold parity if root and scaffold Canon trees have diverged.
+- Treat `CANON/skillsmith/packages/research-scaffold/` as the reusable shell package for downstream control-plane files.
+- Do not rely on a sibling root scaffold directory for authority, parity, or operator guidance.
 
 # 📜 THE DIVINE CANON OF DEVELOPMENT
 

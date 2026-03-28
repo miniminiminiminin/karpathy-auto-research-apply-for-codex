@@ -3,10 +3,12 @@
 ```text
 DISPATCH := {
   slice,
+  fan_out_trigger,
   objective_summary,
   scene_setting_context,
   independence_proof,
   shared_state_risk,
+  why_single_operator_is_insufficient,
   sender_role,
   receiver_role,
   receiver_identity,
@@ -59,6 +61,7 @@ RETURN_SHAPE := {
 
 PASS IF
   DISPATCH.slice
+  AND DISPATCH.fan_out_trigger
   AND DISPATCH.receiver_identity
   AND DISPATCH.receiver_opening_line
   AND DISPATCH.receiver_execution_position
@@ -66,6 +69,7 @@ PASS IF
   AND DISPATCH.scene_setting_context
   AND DISPATCH.independence_proof
   AND DISPATCH.shared_state_risk
+  AND DISPATCH.why_single_operator_is_insufficient
   AND DISPATCH.clarification_rule
   AND DISPATCH.required_skills
   AND SKILL_INPUTS.required_local_assets
@@ -84,6 +88,7 @@ FAIL IF
   OR DISPATCH.scene_setting_context IS missing
   OR DISPATCH.independence_proof IS missing
   OR DISPATCH.shared_state_risk IS missing
+  OR DISPATCH.why_single_operator_is_insufficient IS missing
   OR DISPATCH.clarification_rule IS missing
   OR SCOPE.self_review_required IS missing
   OR SCOPE.report_format_contract IS missing

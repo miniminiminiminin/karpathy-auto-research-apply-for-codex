@@ -20,9 +20,14 @@ PASS IF
   AND evidence_source IS explicit
   AND uncertainty_label IS explicit
   AND evidence_confidence IS explicit
+  AND review_release_consistency_status IS explicit
   AND next_signal_review_time IS explicit_when_shipping_or_monitoring
-  AND threshold_trigger IS explicit_when_shipping_or_monitoring
-  AND threshold_action IS explicit_when_shipping_or_monitoring
+  AND threshold_trigger IS measurable_and_explicit_when_shipping_or_monitoring
+  AND threshold_action IS explicit_and_trigger_bound_when_shipping_or_monitoring
+  AND signal_threshold_matrix_is_explicit_when_shipping_or_monitoring_depends_on_runtime_signals
+  AND sustainability_materiality IS explicit
+  AND sustainability_decision_matrix_is_explicit_when_operational_sustainability_is_plausibly_material
+  AND sustainability_decision_class IS explicit_when_sustainability_note_is_material
   AND sustainability_decision_or_mitigation IS explicit_when_sustainability_note_is_material
   AND first_action IS explicit
 
@@ -42,8 +47,13 @@ FAIL IF
   OR evidence_source IS missing
   OR uncertainty_label IS implicit
   OR evidence_confidence IS implicit
-  OR threshold_trigger IS missing_when_shipping_or_monitoring
-  OR threshold_action IS missing_when_shipping_or_monitoring
+  OR review_release_consistency_status IS missing_or_mismatched
+  OR threshold_trigger IS missing_or_generic_when_shipping_or_monitoring
+  OR threshold_action IS missing_or_unbound_when_shipping_or_monitoring
+  OR signal_threshold_matrix_is_missing_when_shipping_or_monitoring_depends_on_runtime_signals
+  OR sustainability_materiality IS implicit
+  OR sustainability_decision_matrix_is_missing_when_operational_sustainability_is_plausibly_material
+  OR sustainability_decision_class IS missing_when_sustainability_note_is_material
   OR sustainability_decision_or_mitigation IS missing_when_sustainability_note_is_material
   OR next_update_time IS missing WHEN current_mode = incident_response
 
@@ -94,7 +104,11 @@ Candidate.base_branch_or_merge_target := named merge target or review target
 - evidence source:
 - uncertainty label:
 - evidence confidence:
+- review and release consistency status:
 - sustainability note when operationally material:
+- sustainability materiality:
+- sustainability decision matrix reviewed:
+- sustainability decision class:
 - sustainability decision or mitigation:
 
 ## Decision
@@ -116,4 +130,5 @@ Candidate.base_branch_or_merge_target := named merge target or review target
 - next signal review time:
 - threshold trigger:
 - threshold action:
+- signal threshold matrix reviewed:
 - next update time:

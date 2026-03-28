@@ -3,6 +3,7 @@
 ```text
 PROGRAM := {
   objective,
+  fan_out_trigger,
   orchestrator,
   acceptance_owner,
   shutdown_owner,
@@ -40,6 +41,7 @@ INTEGRATION := {
 
 PASS IF
   PROGRAM.acceptance_owner
+  AND PROGRAM.fan_out_trigger
   AND PROGRAM.shutdown_owner
   AND PROGRAM.shutdown_condition
   AND INTEGRATION.merge_strategy

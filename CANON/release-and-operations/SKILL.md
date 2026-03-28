@@ -95,6 +95,8 @@ STEP_2 := gather(verification_status, risk_level, unresolved_defects, runtime_no
 STEP_3 := choose(decision := ship OR ship_with_follow_up OR hold OR do_not_ship OR mitigate_and_monitor OR rollback OR merge_locally OR create_pr OR keep_branch_as_is OR discard_with_confirmation)
 STEP_4 := choose(cheapest_safe_rollout_path)
 STEP_5 := record(open_risk_profile, current_user_impact, first_follow_up_action, branch_disposition_option, monitoring_owner, evidence_timeframe, next_signal_review_time, threshold_trigger, threshold_action, sustainability_note_when_operationally_material, sustainability_decision_or_mitigation)
+STEP_5A := record(signal_threshold_matrix := signal + source + baseline_window + comparison_window + threshold_shape + threshold_value_or_binary_trigger + action_owner + review_time + stop_condition) IF ship_or_monitoring_depends_on_runtime_signals
+STEP_5B := record(sustainability_decision_matrix := materiality_class + impact_vector + impact_horizon + evidence_basis + decision_class + mitigation_or_measurement + decision_owner + review_time) IF operational_sustainability_shift_is_plausible
 
 IF risk_level = medium OR risk_level = high THEN
   record(before_after_state, exact_rollback_instructions, recovery_verifier)
@@ -149,6 +151,8 @@ IF default_ship_decision THEN START -> assets/release-gate.md
 ELSE IF readiness_evidence_is_weak THEN SWITCH -> assets/release-review-checklist.md OR assets/launch-readiness-checklist.md
 ELSE IF rollback_path_must_be_named THEN SWITCH -> assets/rollback-record.md
 ELSE IF runtime_posture_matters_more_than_code_detail THEN SWITCH -> assets/operational-readiness.md OR assets/operational-health-snapshot.md
+ELSE IF threshold_logic_or_post_launch_iteration_is_the_main_risk THEN SWITCH -> assets/signal-threshold-matrix.md
+ELSE IF sustainability_materiality_or_operational_efficiency_tradeoff_is_the_main_risk THEN SWITCH -> assets/sustainability-decision-matrix.md
 ELSE IF current_mode = incident_response THEN SWITCH -> assets/incident-status-update.md
 ELSE IF current_mode = post_incident THEN SWITCH -> assets/post-incident-summary.md
 ELSE IF handoff_owner_changes THEN SWITCH -> assets/mail-handoff.md
@@ -197,6 +201,8 @@ Return a release record with:
 - monitoring owner
 - next signal review time
 - threshold trigger and threshold action
+- signal threshold matrix when ship or monitor depends on runtime signals
+- sustainability decision matrix when operational sustainability is plausibly material
 - sustainability decision or mitigation when material
 - decision
 - explicit branch exit option

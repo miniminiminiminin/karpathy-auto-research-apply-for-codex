@@ -18,6 +18,12 @@ TARGET := {
   current_risks_or_bottlenecks,
   target_state_framing,
   module_count_rationale,
+  scaffold_shape,
+  extension_points,
+  split_trigger_for_large_or_multi_responsibility_units,
+  split_trigger_waiver_id,
+  split_trigger_waiver_owner,
+  split_trigger_waiver_expiry_or_recheck_trigger,
   redundancy_risk,
   dependency_direction,
   workflow_graph_or_node_types,
@@ -46,7 +52,9 @@ TRADE_OFFS := {
   verification_impact,
   bridge_vs_direct_call,
   provider_vs_controller_split,
-  service_vs_tool_split
+  service_vs_tool_split,
+  responsibility_distribution,
+  large_file_or_god_object_risk
 }
 
 MIGRATION := {
@@ -85,6 +93,8 @@ PASS IF
   AND TARGET.seam
   AND TARGET.current_state_evidence
   AND TARGET.module_count_rationale
+  AND TARGET.scaffold_shape
+  AND TARGET.split_trigger_for_large_or_multi_responsibility_units
   AND TARGET.dependency_direction
   AND ALTERNATIVES.recommended_choice
   AND ALTERNATIVES.why_losing_options_lost_now
@@ -99,7 +109,12 @@ FAIL IF
   SUPPORT.files_actually_used IS missing
   OR TARGET.current_state_evidence IS generic
   OR TARGET.module_count_rationale IS implicit
+  OR TARGET.scaffold_shape IS implicit
+  OR TARGET.split_trigger_for_large_or_multi_responsibility_units IS missing
+  OR TARGET.split_trigger_waiver_id IS present AND TARGET.split_trigger_waiver_owner IS missing
+  OR TARGET.split_trigger_waiver_id IS present AND TARGET.split_trigger_waiver_expiry_or_recheck_trigger IS missing
   OR TARGET.dependency_direction IS implicit
+  OR TRADE_OFFS.large_file_or_god_object_risk IS missing
   OR MIGRATION.rollback_plan IS generic
   OR OBSERVABILITY.graceful_failure_modes IS missing
   OR OBSERVABILITY.graceful_failure_modes IS generic

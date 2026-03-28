@@ -1,6 +1,6 @@
 ---
 name: skillsmith
-description: Use when creating or revising a repo-local skill package so its triggers, support files, and output contract are explicit and reusable.
+description: Use when creating or revising a repo-local skill package or Canon-owned reusable package so its triggers, support files, and output contract are explicit and reusable.
 ---
 
 # Skillsmith
@@ -45,6 +45,7 @@ Do not ship a parallel top-level namespace when an existing repo-local skill can
 ## When to Use
 
 - adding or revising a repo-local skill package under `.codex/skills/**`
+- adding or revising a Canon-owned reusable package under `CANON/skillsmith/packages/**`
 - reducing a prompt dump, note, or repeated workflow into a deterministic skill package
 - moving detail out of `SKILL.md` into durable local assets or references
 - tightening trigger boundaries, support-file selection, or output contract clarity
@@ -149,6 +150,7 @@ Return a skill authoring record with:
 - source behavior map
 - pseudocode style changes applied
 - support files added or removed
+- Canon-owned package surfaces added or revised
 - failure modes addressed
 - multi-agent dispatch or reporting contract changed
 - traceability fields added or tightened

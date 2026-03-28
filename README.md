@@ -1,80 +1,113 @@
 # karpathy-auto-research-apply-for-codex
 
-A concept repository for running purpose-driven auto-research loops with Codex.
+A Codex-oriented scaffold repository for building applications through repeated planner -> executor -> evaluator loops guided by a locked purpose and rubric.
 
 Korean README: [README.ko.md](README.ko.md)
 
 ## Credit
 
-This repository is inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch), Andrej Karpathy's public experiment in autonomous iterative research on a compact training setup.
+This repository is inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch), but it is not a port of that project. The idea here is to keep the useful loop discipline and expand it into an autonomous application-delivery scaffold.
 
-This repo does not mirror that codebase directly. Instead, it adapts the core operating idea into a Codex-oriented scaffold centered on:
+## Core Idea
 
-- `purpose.txt` as the objective
-- one-shot rubric generation
-- locked evaluation during the run
-- repeatable improve/execute/score/keep loops
+Every downstream project should optimize for one thing: perform `purpose.txt` as well as possible.
 
-The core idea is simple:
+To make that operational, the scaffold separates:
 
-- write a clear `purpose.txt`
-- let the agent generate a fit-for-purpose `rubric.txt`
-- freeze the rubric
-- run repeated improve -> execute -> score -> keep/discard loops against `project/`
+- `purpose.txt`: what the project should achieve
+- `rubric.txt`: how success is evaluated once the run starts
+- control-plane state: the current plan, loop status, iteration history, and promotion decisions
+- `project/`: the application code or assets being changed
 
-This repo is not a finished product. It is a clean starting point for building and testing that workflow in a way that is inspectable, reproducible, and easy to fork.
+The loop is explicit:
 
-## What Is In This Repo
+1. define or refine the next bounded slice in service of `purpose.txt`
+2. plan that slice
+3. execute only inside `project/`
+4. evaluate with fresh evidence against the locked rubric
+5. promote or discard the iteration
+6. record memory and repeat until the release gate says the application is ready
 
-- `research-scaffold/`: reusable starter layout for a single auto-research run
-- `purpose.txt`: the purpose of this repository itself
-- `rubric.txt`: quality rubric for this repository as a concept scaffold
-- `docs/plans/`: design and implementation planning records for this repo
+## Repository Shape
 
-## Why This Shape
+- `CANON/`: repo-local skill system and operating law
+- `CANON/skillsmith/packages/research-scaffold/`: Canon-owned reusable downstream operating shell source
+- `purpose.txt`: the goal of this repository itself
+- `rubric.txt`: quality rubric for this repository as a scaffold
+- `docs/plans/`: design and implementation records for this repository
 
-Most "auto-research" prompts mix three different concerns:
+## Control Plane + Worktree Model
 
-1. what the project is trying to achieve
-2. how success is evaluated
-3. how the agent iterates
+The scaffold is designed to be copied for each real project. Inside the copied scaffold:
 
-This repo separates them on purpose.
+- the scaffold root is the control plane
+- `project/` is the only product change surface
+- `CANON/` routes the work through intake, design, planning, autonomous delivery, review, and release
 
-- `purpose.txt` defines the objective.
-- `rubric.txt` defines the scoring contract.
-- `AGENTS.md` defines the operating loop.
+This separation matters because planner, executor, and evaluator should not disappear into one untracked blob. The loop has to be inspectable if it is going to converge on the purpose rather than merely produce activity.
 
-The important constraint is that the rubric can be generated once from purpose, but it cannot be edited during the run to make the score easier to win.
+## Autonomous Delivery Loop
 
-## Scaffold Model
+Once the purpose is defined and the rubric is locked, the downstream project should use the loop like this:
 
-`research-scaffold/` is designed for copy-and-run usage.
+1. `planner` chooses the next smallest valuable slice that improves `purpose.txt`
+2. `executor` implements only that slice in `project/`
+3. `evaluator` runs fresh proof, scores the result, and checks regressions
+4. `memory` records what to repeat, avoid, or escalate
+5. `release` decides whether to keep iterating or ship
 
-Expected flow:
+The repository now adds a dedicated Canon owner for that operating lane: `autonomous-app-loop`.
 
-1. Put your target code or assets inside `research-scaffold/project/`.
-2. Replace `research-scaffold/purpose.txt` with your actual goal.
-3. If `research-scaffold/rubric.txt` does not exist, the agent generates it using `research-scaffold/rubric-generation-prompt.md`.
-4. From that point on, `research-scaffold/rubric.txt` is treated as immutable.
-5. The agent iterates on `research-scaffold/project/`, logs runs, scores outcomes, and keeps only validated improvements.
+## What The Canon-Owned Scaffold Package Contains
 
-## Repository Status
+The reusable scaffold source now lives under `CANON/skillsmith/packages/research-scaffold/`.
 
-This repository currently provides:
+That Canon-owned package contains:
 
-- a concept-level README
-- root operating guidance
-- a reusable scaffold directory
-- a rubric-generation prompt
-- logging templates
-- a scaffold-level `AGENTS.md` for downstream experiment runs
+- `purpose.txt`: downstream project objective
+- `rubric-generation-prompt.md`: contract for generating `rubric.txt` once
+- `plan.md`: currently approved execution plan
+- `loop-status.md`: current stage, active iteration, and next owner
+- `iterations/`: one record per iteration
+- `results.tsv`: summary table for baseline and later iterations
+- `run.log`: execution evidence
+- `score.log`: scoring evidence
+- `notes.md`: cross-iteration notes and ideas
+- `project/`: target application
 
-It does not yet provide a dedicated bootstrap script or scoring engine. The current version favors explicit text contracts over opaque automation.
+Downstream packaging should materialize this shell package together with the root `CANON/` tree. The repository no longer needs a sibling root `research-scaffold/` directory.
+
+## Honesty Limits
+
+This repository does not claim that a hidden runtime engine already exists.
+
+What it provides today is:
+
+- a clear operating contract
+- a reusable scaffold layout
+- Canon skills and assets for routing and loop control
+- explicit state files for planning, execution, evaluation, and release
+
+What it does not yet provide is:
+
+- a dedicated script or daemon that runs the loop unattended
+- an automatic scoring engine
+- a guaranteed self-driving build pipeline
+
+The current version favors explicit operating law over opaque automation.
+
+## Why This Direction
+
+The original research-loop shape was useful but incomplete for application delivery. It optimized for experimentation, not for finishing software. The new structure keeps the good discipline from purpose/rubric locking while adding:
+
+- explicit planning and architecture gates
+- separate planner/executor/evaluator roles
+- promotion decisions backed by fresh evidence
+- release readiness as a real terminal lane
 
 ## Next Improvements Worth Considering
 
-- add a small bootstrap script that creates `rubric.txt` from `purpose.txt` using the prompt contract
-- add domain-specific rubric generation variants for frontend, CLI, and research workflows
-- add example projects that demonstrate one full baseline-to-improvement run
-- add a machine-readable results summary format next to `results.tsv`
+- add a small bootstrap tool that generates `rubric.txt` and initializes the control-plane files
+- add domain-specific rubric generation variants for frontend, backend, and agentic tool projects
+- add example downstream projects that show multiple full planner/executor/evaluator iterations
+- add machine-readable iteration summaries next to `results.tsv`

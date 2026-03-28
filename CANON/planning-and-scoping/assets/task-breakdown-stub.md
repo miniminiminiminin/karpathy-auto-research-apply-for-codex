@@ -20,7 +20,9 @@ GOAL := {
   created_files,
   modified_files,
   test_files,
-  file_responsibilities
+  file_responsibilities,
+  starter_scaffold_shape,
+  file_or_class_split_trigger
 }
 
 CURRENT_STEP := {
@@ -68,4 +70,6 @@ FAIL IF
   GOAL.file_responsibilities IS missing
   UPCOMING_PATH.next_1 IS missing
   OR BOUNDARIES.next_skill IS implicit
+  OR GOAL.starter_scaffold_shape IS missing
+  OR GOAL.file_or_class_split_trigger IS missing
 ```

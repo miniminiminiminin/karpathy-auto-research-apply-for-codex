@@ -23,6 +23,8 @@
 - cheapest safe path chosen:
 - chosen rollout shape:
 - sustainability note when material:
+- sustainability decision class:
+- sustainability decision matrix reviewed:
 - sustainability decision or mitigation:
 
 ## Risk

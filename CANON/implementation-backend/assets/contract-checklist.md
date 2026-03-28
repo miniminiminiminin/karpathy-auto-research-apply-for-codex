@@ -15,6 +15,9 @@ CONTRACT := {
   compatibility_risk,
   validation_path,
   edge_handling,
+  responsibility_split,
+  file_or_class_split_trigger,
+  large_file_exception_rationale,
   verification_after_fix
 }
 
@@ -31,6 +34,8 @@ PASS IF
   AND failure_path_is_covered
   AND actionable_error_behavior_is_defined
   AND side_effect_boundary_is_isolated
+  AND responsibility_split_is_recorded
+  AND file_or_class_split_trigger_is_recorded
   AND consumer_impact_is_recorded
   AND idempotency_expectation_is_recorded
   AND bounded_runtime_behavior_is_recorded
@@ -46,6 +51,8 @@ FAIL IF
   OR watched_test_fail_before_implementation IS missing
   OR validation_path_is_missing
   OR failure_path_is_missing
+  OR responsibility_split_is_missing
+  OR file_or_class_split_trigger_is_missing
   OR consumer_impact_is_missing
   OR runtime_proof_is_required_but_missing
 

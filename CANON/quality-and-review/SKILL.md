@@ -48,6 +48,10 @@ Do not redesign the product or implementation from inside review.
 Review owns acceptance, evidence sufficiency, and comparable-experience rejection logic; remediation design belongs to the implementation or product owner.
 </OWNER-BOUNDARY>
 
+<NON-NEGOTIABLE>
+Do not approve code that hides multiple unrelated responsibilities in one class, one component, or one oversized file without a named irreducible reason and a recorded split decision.
+</NON-NEGOTIABLE>
+
 ## The Iron Law
 
 ```text
@@ -79,8 +83,9 @@ If you haven't completed root cause investigation, you cannot propose fixes.
 
 ```text
 IF default_review THEN START -> assets/review-checklist.md
-ELSE IF requirement_fit_is_primary_question THEN START -> assets/spec-review.md
-ELSE IF another_owner_needs_the_result THEN START -> assets/review-handoff.md
+IF requirement_fit_is_primary_question THEN ADD -> assets/spec-review.md
+IF comparable_experience_or_fallback_equivalence_is_under_review THEN ADD -> assets/context-equivalence-matrix.md
+IF another_owner_needs_the_result THEN ADD -> assets/review-handoff.md
 
 MUST READ -> references/review-sequencing.md BEFORE choosing_review_order
 IF seam_has(explicit_acceptance_criteria OR approved_plan_steps OR spec_language) THEN MUST READ -> references/criterion-discipline.md
@@ -127,6 +132,8 @@ STEP_7 := verify(review_feedback_against_codebase_reality) IF incoming_change_re
 STEP_8 := identify(full_verification_command_required_for_claim)
 STEP_9 := run_and_read(full_verification_command_fresh)
 STEP_10 := record(proof_freshness, evidence_gaps, unresolved_risks, blocked_reproduction, root_cause_status, comparable_experience_risk, user_control_regressions, responsive_survival_gaps)
+STEP_10B := record(context_equivalence := relevant_contexts + fallback_paths + equivalence_expectation + verified_evidence + unresolved_gap) IF user_facing_or_comparable_experience_claim_is_present
+STEP_10A := record(structure_clarity, responsibility_split_status, god_object_risk, large_file_exception_rationale)
 STEP_11 := route_to_failure_memory IF debugging_or_verification_workaround_repeats
 STEP_12 := decide(approve OR approve_with_follow_up OR revise OR block)
 

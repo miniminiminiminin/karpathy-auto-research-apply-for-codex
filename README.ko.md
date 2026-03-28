@@ -1,78 +1,107 @@
 # karpathy-auto-research-apply-for-codex
 
-Codex로 목적 기반 auto-research 루프를 굴리기 위한 컨셉 저장소입니다.
+고정된 `purpose.txt`와 `rubric.txt`를 기준으로 planner -> executor -> evaluator 루프를 반복하면서 애플리케이션을 완성해 가기 위한 Codex 중심 스캐폴드 저장소입니다.
 
 ## 크레딧
 
-이 저장소는 Andrej Karpathy의 공개 실험 저장소인 [karpathy/autoresearch](https://github.com/karpathy/autoresearch)에서 아이디어를 얻었습니다.
+이 저장소는 [karpathy/autoresearch](https://github.com/karpathy/autoresearch)에서 영감을 받았지만, 원본을 옮긴 것은 아닙니다. 핵심 루프 규율은 유지하되, 그 구조를 실제 애플리케이션 개발까지 확장하는 방향으로 재구성했습니다.
 
-다만 이 레포는 원본 코드를 그대로 옮긴 것이 아니라, 그 핵심 운영 아이디어를 Codex 중심의 scaffold로 재해석한 것입니다. 구체적으로는 아래에 초점을 둡니다.
+## 핵심 아이디어
 
-- 목표를 담는 `purpose.txt`
-- 1회성 rubric 생성
-- 실행 중 rubric 고정
-- 반복 가능한 개선/실행/채점/유지 루프
+모든 downstream 프로젝트는 결국 한 가지를 최적화해야 합니다. `purpose.txt`를 가능한 한 잘 수행하는 것입니다.
 
-핵심 아이디어는 단순합니다.
+이를 위해 scaffold는 아래를 분리합니다.
 
-- 명확한 `purpose.txt`를 작성한다
-- 에이전트가 목적에 맞는 `rubric.txt`를 생성한다
-- 생성된 rubric을 고정한다
-- `project/`를 대상으로 개선 -> 실행 -> 채점 -> 유지/폐기를 반복한다
+- `purpose.txt`: 프로젝트가 달성해야 하는 목표
+- `rubric.txt`: run 시작 후 고정되는 평가 계약
+- control-plane 상태 파일: 현재 계획, 루프 상태, iteration 기록, 승격 결정
+- `project/`: 실제 코드와 자산을 수정하는 작업면
 
-이 저장소는 완성된 제품이라기보다, 위 워크플로를 실험하고 포크하기 쉬운 형태로 정리한 출발점입니다.
+루프는 다음처럼 명시적으로 굴러갑니다.
+
+1. `purpose.txt`에 가장 도움이 되는 다음 bounded slice를 정한다
+2. 그 slice를 계획한다
+3. `project/` 안에서만 실행한다
+4. 잠긴 rubric과 fresh evidence로 평가한다
+5. iteration을 승격하거나 폐기한다
+6. 메모리를 남기고 release gate에 도달할 때까지 반복한다
 
 ## 저장소 구성
 
-- `research-scaffold/`: 한 번의 auto-research run을 위한 재사용 가능한 템플릿
-- `purpose.txt`: 이 저장소 자체의 목적
-- `rubric.txt`: 이 저장소를 컨셉 스캐폴드로서 평가하는 기준
-- `docs/plans/`: 설계 및 구현 계획 문서
+- `CANON/`: 로컬 스킬 시스템과 운영 법전
+- `CANON/skillsmith/packages/research-scaffold/`: downstream 운영 셸의 Canon-owned package source
+- `purpose.txt`: 이 저장소 자체의 목표
+- `rubric.txt`: 이 저장소를 scaffold로 평가하는 기준
+- `docs/plans/`: 이 저장소의 설계 및 구현 기록
 
-## 왜 이렇게 나눴나
+## Control Plane + Worktree 모델
 
-많은 auto-research 프롬프트는 아래 세 가지가 섞여 있습니다.
+실제 프로젝트는 `CANON/skillsmith/packages/research-scaffold/`와 루트 `CANON/` 트리를 함께 materialize해서 시작합니다. materialized scaffold 안에서는:
 
-1. 프로젝트가 달성하려는 목표
-2. 성공을 평가하는 기준
-3. 에이전트가 반복 개선하는 방식
+- scaffold 루트가 control plane 역할을 하고
+- `project/`가 실제 제품 변경면이 되며
+- `CANON/`이 intake, 설계, 계획, 자율 delivery, 리뷰, release를 라우팅합니다
 
-이 저장소는 그 셋을 의도적으로 분리합니다.
+이 분리는 중요합니다. planner, executor, evaluator가 하나의 흐릿한 행위로 섞이면 루프가 목적에 수렴하는지 검증할 수 없기 때문입니다.
 
-- `purpose.txt`는 목표를 정의합니다.
-- `rubric.txt`는 평가 계약을 정의합니다.
-- `AGENTS.md`는 실행 루프를 정의합니다.
+## Autonomous Delivery Loop
 
-중요한 제약은 rubric이 목적에서 한 번 생성될 수는 있어도, 실행 중 점수를 쉽게 만들기 위해 수정되면 안 된다는 점입니다.
+목표가 정해지고 rubric이 고정되면 downstream 프로젝트는 다음 루프를 사용합니다.
 
-## Scaffold 동작 방식
+1. `planner`가 `purpose.txt`를 가장 잘 전진시키는 다음 작은 slice를 정함
+2. `executor`가 `project/` 안에서만 그 slice를 구현함
+3. `evaluator`가 fresh proof를 실행하고 rubric 기준으로 점검함
+4. `memory`가 반복할 것, 피할 것, 승격할 것을 기록함
+5. `release`가 계속 반복할지, 멈추고 배포할지 결정함
 
-`research-scaffold/`는 복사해서 바로 쓰는 템플릿을 목표로 합니다.
+이 운영 구간을 위해 새 Canon 스킬 `autonomous-app-loop`를 추가했습니다.
 
-예상 흐름은 다음과 같습니다.
+## Canon-Owned Scaffold Package에 들어 있는 것
 
-1. `research-scaffold/project/`에 실제 대상 코드나 자산을 넣는다.
-2. `research-scaffold/purpose.txt`를 실제 목표로 바꾼다.
-3. `research-scaffold/rubric.txt`가 없다면 `research-scaffold/rubric-generation-prompt.md`를 이용해 생성한다.
-4. 그 순간부터 `research-scaffold/rubric.txt`는 불변으로 취급한다.
-5. 에이전트는 `research-scaffold/project/`를 반복적으로 수정하고, 실행하고, 채점하고, 검증된 개선만 유지한다.
+- `purpose.txt`: downstream 프로젝트의 목표
+- `rubric-generation-prompt.md`: `rubric.txt`를 1회 생성하기 위한 계약
+- `plan.md`: 현재 승인된 실행 계획
+- `loop-status.md`: 현재 단계, active iteration, 다음 owner
+- `iterations/`: iteration별 상세 기록
+- `results.tsv`: baseline과 이후 iteration의 요약 표
+- `run.log`: 실행 증거
+- `score.log`: 평가 증거
+- `notes.md`: iteration 간 메모와 다음 아이디어
+- `project/`: 실제 애플리케이션
 
-## 현재 상태
+downstream 쪽에서는 이 package surface를 루트로 펼친 뒤, 같은 위치에 루트 `CANON/` 트리를 함께 복사해 local operating law를 구성합니다. 저장소 루트에는 더 이상 별도 `research-scaffold/` 디렉토리가 필요하지 않습니다.
 
-이 저장소는 현재 아래를 제공합니다.
+## 현재 버전의 정직한 한계
 
-- 컨셉 수준의 README
-- 루트 운영 지침
-- 재사용 가능한 scaffold 디렉터리
-- rubric 생성 프롬프트
-- 실행 로그 템플릿
-- downstream run을 위한 scaffold 수준 `AGENTS.md`
+이 저장소는 아직 숨겨진 실행 엔진이 있다고 주장하지 않습니다.
 
-아직 전용 bootstrap 스크립트나 자동 채점 엔진은 없습니다. 현재 버전은 숨겨진 자동화보다 명시적인 텍스트 계약을 우선합니다.
+현재 제공하는 것은:
+
+- 명시적인 운영 계약
+- 재사용 가능한 scaffold 구조
+- 라우팅과 루프 제어를 위한 Canon 스킬과 자산
+- 계획, 실행, 평가, release를 기록하는 상태 파일
+
+아직 제공하지 않는 것은:
+
+- 완전 무인으로 루프를 돌리는 전용 daemon
+- 자동 채점 엔진
+- 무조건 self-driving인 빌드 파이프라인
+
+현재 버전은 불투명한 자동화보다 명시적인 운영 법칙을 우선합니다.
+
+## 왜 이렇게 바꿨나
+
+기존 research-loop 구조는 실험에는 적합했지만, 애플리케이션을 끝까지 완성하는 데는 부족했습니다. 새 구조는 purpose/rubric locking의 장점을 유지하면서 아래를 추가합니다.
+
+- 명시적인 planning 및 architecture gate
+- planner/executor/evaluator 역할 분리
+- fresh evidence 기반 승격 결정
+- 실제 종료 조건으로서의 release lane
 
 ## 다음에 더 보강할 만한 것
 
-- `purpose.txt`에서 `rubric.txt`를 실제로 생성하는 작은 bootstrap 스크립트 추가
-- frontend, CLI, research workflow용 rubric 확장 예시 추가
-- baseline부터 개선까지 한 번의 전체 run 예제 추가
-- `results.tsv` 옆에 기계가 읽기 쉬운 결과 요약 포맷 추가
+- `rubric.txt`와 control-plane 파일을 초기화하는 bootstrap 도구 추가
+- frontend, backend, agentic tooling용 rubric 생성 변형 추가
+- planner/executor/evaluator 루프 전체를 보여주는 예제 프로젝트 추가
+- `results.tsv` 옆에 기계가 읽기 쉬운 iteration 요약 포맷 추가

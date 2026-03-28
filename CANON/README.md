@@ -15,6 +15,7 @@ This exported SoloPilot pack keeps a small, standalone skill catalog under `.cod
 - do not present imported `superpowers` as a second public catalog
 - keep the skill system optimized for one goal: improving a project's ability to perform `purpose.txt`
 - compile durable external principle libraries into existing owners with one active batch at a time and explicit parked follow-ups
+- keep reusable downstream package sources inside Canon-owned paths when copy behavior is part of the operating law
 
 ## Entry Order
 
@@ -24,7 +25,7 @@ This exported SoloPilot pack keeps a small, standalone skill catalog under `.cod
 4. Move to `visual-design` when hierarchy, typography, color, density, or art direction still need explicit rules before implementation.
 5. Move to `planning-and-scoping` only after the direction has been presented and approved.
 6. Use `architecture-and-design` when seams, contracts, topology, or rollback shape are still open.
-7. Use `autonomous-app-loop` when one bounded slice is execution-ready and the next move is a planner -> executor -> evaluator iteration in service of `purpose.txt`.
+7. Use `autonomous-app-loop` when bootstrap, rubric lock, or one bounded slice in the planner -> executor -> evaluator loop is the next governed move in service of `purpose.txt`.
 8. Use `implementation-*` only when the autonomous loop or plan has already assigned a concrete implementation seam.
 9. Use `quality-and-review` for ordered review, fresh verification before completion claims, and acceptance gates.
 10. Use `release-and-operations` for ship, hold, rollback, and branch-exit decisions after fresh evidence.
@@ -39,7 +40,7 @@ This exported SoloPilot pack keeps a small, standalone skill catalog under `.cod
 | `visual-design` | turn approved UX intent into explicit visual direction and a visual approval bar | UI, art direction, visual critic | design, critique, approval |
 | `planning-and-scoping` | turn an approved direction into owned seams, non-goals, and proof | CTO, lead, implementer | planning, scoping |
 | `architecture-and-design` | decide seams, contracts, and design trade-offs before implementation | CTO, lead, platform | architecture, design |
-| `autonomous-app-loop` | run one purpose-first planner -> executor -> evaluator iteration and decide promotion | orchestrator, planner, executor, evaluator | execution, scoring, convergence |
+| `autonomous-app-loop` | own bootstrap, rubric lock, and one purpose-first planner -> executor -> evaluator iteration plus promotion | orchestrator, planner, executor, evaluator | bootstrap, execution, scoring, convergence |
 | `implementation-frontend` | implement an approved UI seam with explicit state and accessibility proof | frontend, design-minded engineer | implementation, verification |
 | `implementation-backend` | implement a chosen backend seam with contract-safe verification | backend, platform engineer | implementation, verification |
 | `quality-and-review` | require fresh proof, ordered review, and acceptance before completion claims | reviewer, QA, lead | testing, review, acceptance |
@@ -58,6 +59,8 @@ This exported SoloPilot pack keeps a small, standalone skill catalog under `.cod
 - optional: `references/`, `scripts/`
 - avoid local scripts unless a repeated workflow is deterministic enough to justify them
 - when a skill owns a deterministic CLI workflow, keep the authoritative scripts inside that skill package
+- keep Canon-owned reusable package sources under the owning package path, currently `CANON/skillsmith/packages/**`
+- do not require a sibling root scaffold directory when the Canon-owned package already carries the reusable shell
 
 ## Design Standard
 
@@ -75,6 +78,7 @@ High-quality SoloPilot skills should:
 - make delegated-work reporting traceable when a skill can dispatch or guide slices
 - return a concrete output contract
 - give visual direction its own owner when hierarchy, tone, or implementation-resistant screen rules would otherwise stay implicit
+- make bootstrap and rubric-lock behavior legible from Canon without relying on sibling scaffold prose
 
 ## Promotion Rules
 

@@ -3,12 +3,21 @@
 ```text
 SLICE := {
   name,
+  fan_out_trigger,
   reason_for_slice,
+  why_single_operator_is_insufficient,
   execution_pattern,
   owner_role,
   receiver,
   receiver_identity,
   required_skills
+}
+
+NO_FAN_OUT := {
+  trigger,
+  why_single_operator_is_sufficient,
+  chosen_single_owner,
+  next_skill
 }
 
 BOUNDARIES := {
@@ -51,8 +60,10 @@ STATUS := {
 
 PASS IF
   SLICE.name
+  AND SLICE.fan_out_trigger
   AND SLICE.required_skills
   AND SLICE.receiver_identity
+  AND SLICE.why_single_operator_is_insufficient
   AND BOUNDARIES.owned_files_or_concerns
   AND BOUNDARIES.proof_expected
   AND SUPPORT_CONTRACT.local_assets_to_use
@@ -64,4 +75,8 @@ FAIL IF
   OR HANDOFF_MINIMUM.declared_identity IS omitted
   OR HANDOFF_MINIMUM.actual_local_support_used IS omitted
   OR HANDOFF_MINIMUM.deviations_from_dispatch IS hidden
+  OR explicit_orchestration_consideration_exists AND NO_FAN_OUT.trigger IS missing_when_dispatch_did_not_happen
+  OR explicit_orchestration_consideration_exists AND NO_FAN_OUT.why_single_operator_is_sufficient IS missing_when_dispatch_did_not_happen
+  OR explicit_orchestration_consideration_exists AND NO_FAN_OUT.chosen_single_owner IS missing_when_dispatch_did_not_happen
+  OR explicit_orchestration_consideration_exists AND NO_FAN_OUT.next_skill IS missing_when_dispatch_did_not_happen
 ```

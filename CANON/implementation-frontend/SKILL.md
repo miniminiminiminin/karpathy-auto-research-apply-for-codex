@@ -29,6 +29,14 @@ If no support files are needed, say `none` explicitly. Final outputs must report
 Keep state as close to usage as possible, preserve semantic structure, and avoid performance work that is not backed by a user-facing bottleneck or measurable interaction risk.
 </NON-NEGOTIABLE>
 
+<NON-NEGOTIABLE>
+Do not let one component, hook, or page absorb unrelated layout policy, data wiring, effect control, and visual state just because it is convenient. Split responsibilities before the seam becomes hard to reason about.
+</NON-NEGOTIABLE>
+
+<CHANGE-RADIUS-GATE>
+If the implementation expands beyond one primary route or component seam, adds a new owner, or starts changing adjacent surfaces not named in the plan, stop and route back to planning-and-scoping.
+</CHANGE-RADIUS-GATE>
+
 <DISCIPLINE-GATE>
 root_cause_or_failure_mode_is_named_before_fix.
 red_green_proof_is_required_when_behavior_changes.
@@ -90,6 +98,7 @@ INPUT := { seam, user_facing_behavior, data_contract, required_states, token_han
 
 IF user_facing_behavior_is_implicit OR state_coverage_is_missing THEN STOP("define the frontend seam first")
 IF behavior_change_or_bug_fix AND root_cause_or_failure_mode_is_implicit THEN STOP("name the failure mode before fixing")
+IF change_radius_exceeds_one_primary_seam OR adjacent_surface_changes_are_unplanned THEN ROUTE -> planning-and-scoping
 
 STATE_SET := NAME(loading, empty, success, error, blocked_interaction)
 IF behavior_change_or_bug_fix THEN
@@ -102,6 +111,8 @@ IMPLEMENT minimum_change_that_satisfies(approved_behavior)
 GUARDRAILS := KEEP(
   state_local_to_usage,
   semantic_structure_intact,
+  component_or_hook_responsibility_is_single_and_named,
+  large_component_or_file_split_when_it_crosses_responsibility_or_about_200_lines_without_irreducible_reason,
   sensitive_data_out_of_client_storage,
   readable_measure_and_asset_size_expectations_named,
   primary_emphasis_beats_decorative_treatment,
@@ -158,12 +169,14 @@ Return a frontend delivery note with:
 - files read before coding
 - why each file was loaded
 - seam implemented
+- component responsibility and split decision
 - states and accessibility coverage
 - comparable experience and user-control coverage
 - proof run
 - watched failing test before implementation
 - wrote minimal code to pass
 - responsive or performance notes
+- change radius and any reroute trigger
 - next owner or next skill
 - files actually used
 

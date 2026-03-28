@@ -59,9 +59,9 @@
   - oversized-request decomposition, parked follow-up recording, and `skillsmith` routing rules into `CANON/intake-and-routing/**`
   - root owner-boundary and deferred-hardening catalog updates into `CANON/README.md`
 - deferred:
-  - stronger release-side sustainability decision hooks beyond note-only recording
-  - stricter iterate-with-data thresholds and post-launch metric triggers in release and review hardening
-  - broader context-for-everyone matrices covering first-time users, non-ideal environments, and extended alternate-path equivalence
+  - stronger release-side sustainability decision hooks beyond note-only recording now hardened through release sustainability decision matrices; later audits may still tighten domain-specific impact vectors and evidence patterns
+  - stricter iterate-with-data thresholds and post-launch metric triggers in release and review hardening now hardened through release signal-threshold matrices; later audits may still tighten domain-specific signal catalogs
+  - broader context-for-everyone matrices covering first-time users, non-ideal environments, and extended alternate-path equivalence now hardened through review context-equivalence matrices; later audits may still tighten owner-specific context catalogs
   - any later cross-owner hardening revealed by future audits
 - excluded as non-durable:
   - biography, aesthetic mythology, and historical nostalgia

@@ -24,6 +24,8 @@ DECISION := {
   rejected_because,
   route_confidence,
   material_ambiguity,
+  freshness_status,
+  revalidation_reason,
   one_focused_clarification_question,
   blocked_actions_before_routing
 }
@@ -57,6 +59,7 @@ PASS IF
   AND DECISION.considered_skills
   AND DECISION.recommended_skill
   AND DECISION.rationale
+  AND DECISION.freshness_status
   AND BOUNDARY.in_scope_now
   AND BOUNDARY.not_in_scope_now
   AND OWNERS.next_owner
@@ -65,6 +68,7 @@ FAIL IF
   DECISION.rejected_because IS missing
   OR DECISION.active_batch_now IS missing_when_request_is_oversized
   OR DECISION.parked_follow_ups IS missing_when_request_spans_multiple_batches
+  OR DECISION.freshness_status IS stale_or_unknown AND DECISION.revalidation_reason IS missing
   OR DECISION.blocked_actions_before_routing IS missing
   OR SUPPORT.files_read_before_routing IS missing
   OR SUPPORT.support_files_actually_used IS missing

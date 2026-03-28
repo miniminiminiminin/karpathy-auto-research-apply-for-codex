@@ -43,7 +43,14 @@ GOAL := {
   created_files,
   modified_files,
   test_files,
-  file_responsibilities
+  file_responsibilities,
+  starter_scaffold_shape,
+  expected_extension_points,
+  file_or_class_split_trigger,
+  split_trigger_waiver_id,
+  split_trigger_waiver_owner,
+  split_trigger_waiver_expiry_or_recheck_trigger,
+  large_file_exception_rationale
 }
 
 TRACEABILITY := {
@@ -103,6 +110,8 @@ PROOF := {
 CLOSE := {
   stop_condition,
   unresolved_risks,
+  plan_freshness_status,
+  revalidation_trigger,
   recheck_trigger,
   next_skill
 }
@@ -126,6 +135,8 @@ PASS IF
   AND GOAL.owned_seam
   AND GOAL.owned_files_or_surface
   AND GOAL.file_responsibilities
+  AND GOAL.starter_scaffold_shape
+  AND GOAL.file_or_class_split_trigger
   AND GOAL.non_goals
   AND ACCEPTANCE.acceptance_wording
   AND CURRENT_STEP.active_step
@@ -137,6 +148,7 @@ PASS IF
   AND PROOF.exact_proof_path
   AND PROOF.verification_command_or_evidence
   AND CLOSE.stop_condition
+  AND CLOSE.plan_freshness_status
   AND CLOSE.next_skill
 
 FAIL IF
@@ -148,7 +160,12 @@ FAIL IF
   OR OWNERSHIP.receiving_owner IS missing
   OR GOAL.minimum_useful_slice IS vague
   OR GOAL.redundant_work_to_avoid IS missing
+  OR GOAL.starter_scaffold_shape IS missing
+  OR GOAL.file_or_class_split_trigger IS missing
+  OR GOAL.split_trigger_waiver_id IS present AND GOAL.split_trigger_waiver_owner IS missing
+  OR GOAL.split_trigger_waiver_id IS present AND GOAL.split_trigger_waiver_expiry_or_recheck_trigger IS missing
   OR SUPPORT.files_read_before_scoping IS missing
+  OR CLOSE.plan_freshness_status IS stale_or_unknown
   OR SUPPORT.isolated_workspace_verified IS missing_when_execution_requires_isolation
   OR SUPPORT.support_files_actually_used IS missing
 

@@ -17,6 +17,10 @@ Delegate tasks to specialized agents with isolated context. By precisely craftin
 Do not dispatch parallel slices until ownership, proof, convergence order, and shutdown condition are explicit.
 </HARD-GATE>
 
+<HARD-GATE>
+If the user explicitly asked for subagents, delegation, parallel evaluation, or orchestration, do not leave that decision implicit. Either run `multi-agent-orchestration` with a dispatch record or return an explicit no-fan-out decision that names why one operator remains superior.
+</HARD-GATE>
+
 <NON-NEGOTIABLE>
 Every run must declare its exact local `assets/` and `references/` set before execution, read the required files before dispatch, and record why each declared file was loaded.
 Unnamed support files are out of contract and must not be relied on.
@@ -48,9 +52,9 @@ Fresh subagent per task or slice. Do not reuse stale worker context when a fresh
 
 ```text
 IF slice_count < 2:
-  STOP("one owner can still carry the work")
+  STOP("record no-fan-out decision in assets/slice-record.md and keep one owner")
 ELSE IF shared_write_overlap = TRUE:
-  STOP("parallel slices are unsafe")
+  STOP("record no-fan-out decision in assets/slice-record.md and keep one owner")
 ELSE IF merge_strategy IS null OR acceptance_owner IS null:
   STOP("convergence contract is incomplete")
 ELSE:
@@ -64,10 +68,13 @@ ELSE:
 2. READ(required_assets_and_references_before_dispatch)
 3. RECORD(why_each_declared_file_was_loaded)
 4. DEFINE(reason_for_fan_out)
+4A. RECORD(fan_out_trigger := explicit_user_request OR independent_tracks OR review_parallelism OR competing_proposals)
+4B. RECORD(why_single_operator_is_insufficient)
 5. CHECK(independence := file_overlap, concern_overlap, shared_root_cause_risk)
 6. CHOOSE(pattern := research_fan_out OR independent_implementation OR verification_parallel OR competing_proposals)
 7. REQUIRE(one_slice_per_problem_domain_when_root_causes_are_independent)
 8. RECORD(each_slice IN assets/slice-record.md)
+8A. RECORD(no_fan_out_decision := fan_out_trigger + why_single_operator_is_sufficient + chosen_single_owner + next_skill IN assets/slice-record.md) IF orchestration_was_considered_but_rejected
 9. DISPATCH(fresh_subagent_with_precisely_curated_context_per_slice)
 10. REQUIRE(two_stage_review := spec_compliance_then_code_quality) IF slice_is_implementation_work
 11. TRACK(live_status IN assets/active-slices.md) IF fan_out_is_live = TRUE
@@ -147,6 +154,9 @@ Return an orchestration record with:
 - files read before dispatch
 - why each file was loaded
 - reason for fan-out
+- fan-out trigger
+- why one operator is insufficient
+- no-fan-out decision when orchestration was considered and rejected
 - slice list
 - per-slice owner, required skills, and proof
 - per-slice declared identity

@@ -44,6 +44,14 @@ If no support files are needed, say `none` explicitly. Final outputs must report
 Quote the approved requirement, name the seam, name the owned files or surface, and state the non-goals. Planning is boundary control, not wishlist expansion.
 </NON-NEGOTIABLE>
 
+<NON-NEGOTIABLE>
+Before implementation starts, name the starter scaffold, responsibility split, and the trigger that forces a file or class to be split instead of quietly growing into a god object.
+</NON-NEGOTIABLE>
+
+<NON-NEGOTIABLE>
+If plan freshness changes because blockers, dependency shifts, adjacent diffs, or approval age invalidate the current slice assumptions, route back for revalidation instead of quietly continuing.
+</NON-NEGOTIABLE>
+
 <OWNER-BOUNDARY>
 Do not decide module boundaries, public contracts, or replacement architecture from inside planning.
 If the active uncertainty is about seam shape rather than minimum useful slice, route back to `architecture-and-design`.
@@ -105,6 +113,8 @@ Before defining tasks, map out which files will be created or modified and what 
 - Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
 - You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
 - Files that change together should live together. Split by responsibility, not by technical layer.
+- If the first implementation step would create a catch-all file or class, change the plan before coding.
+- If a touched file or class is expected to grow past roughly 200 lines, record whether it is still one irreducible seam or should be split now.
 - In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure, but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
 
 This structure informs execution decomposition only. If deciding this structure would change module boundaries, public contracts, or replacement seams, route back to `architecture-and-design` first. Each task should produce self-contained changes that make sense independently.
@@ -162,9 +172,10 @@ ELSE:
 6. QUOTE(source_requirement_or_decision, freshness, approval_owner)
 7. DEFINE(decision_to_unlock, owned_seam, owned_files_or_surface, non_goals)
 8. NAME(minimum_useful_slice, reuse_before_rebuild_decision, redundant_work_to_avoid)
-9. MAP(file_structure := created_files + modified_files + tests + responsibilities)
+9. MAP(file_structure := created_files + modified_files + tests + responsibilities + starter_scaffold + split_triggers)
 10. WRITE(acceptance := observable_behavior + exact_proof_path + approval_owner)
 11. CHECK(blockers, dependency_risks, producer_or_consumer_blast_radius)
+11A. CHECK(revalidation_triggers := blockers + dependency_shift + adjacent_diff + approval_age + changed_assumptions)
 12. REDUCE(work) UNTIL active_step_is_one_owned_action_with_one_proof_path_and_one_clean_stop_point
 13. WRITE(bite_sized_steps := one_action_per_step_with_exact_commands_and_expected_signals)
 14. NAME(exact_executor, exact_verifier, exact_receiver)
@@ -231,6 +242,8 @@ Return a plan record with:
 - plan header fields
 - seam, owned files or surface, and non-goals
 - exact file structure and responsibilities
+- starter scaffold, extension expectations, and file-split triggers
+- revalidation triggers and freshness status
 - minimum useful slice and reuse-before-rebuild rationale
 - exact acceptance and exact proof path
 - one active step only

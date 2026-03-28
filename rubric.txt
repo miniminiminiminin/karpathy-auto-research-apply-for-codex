@@ -1,30 +1,34 @@
-Repository Quality Rubric for This Concept Scaffold
+Repository Quality Rubric for This Autonomous App Loop Scaffold
 
-1. Concept clarity
-- Does the repository clearly explain the relationship between purpose, rubric, and execution loop?
-- Is the distinction between repo-level docs and scaffold-level execution obvious?
+1. Purpose alignment
+- Does the repository clearly optimize for performing `purpose.txt` as well as possible?
+- Is the relationship between purpose, plan, execution, evaluation, and promotion explicit?
 
-2. Execution contract clarity
-- Can a user understand when `rubric.txt` may be generated and when it becomes immutable?
-- Does the scaffold define concrete logs, outputs, and keep/discard rules?
+2. Control-plane clarity
+- Is it obvious which files are live project control-plane records versus Canon templates?
+- Is the distinction between scaffold root state and `project/` work surface easy to follow?
 
-3. Reusability
-- Can a downstream user adapt the scaffold with minimal editing?
-- Are templates and placeholders explicit instead of hidden in prose?
+3. Loop rigor
+- Does the scaffold define a concrete planner -> executor -> evaluator -> memory loop?
+- Are promotion, discard, and release decisions tied to fresh evidence rather than vague narration?
 
-4. Honesty of claims
-- Does the repo avoid overstating automation that is not actually implemented?
-- Are current limitations stated plainly?
+4. Reusability
+- Can a downstream user copy the Canon-owned scaffold package plus `CANON/` and understand how to operate it with minimal explanation?
+- Are the required files and operating stages explicit rather than hidden in prose?
 
-5. Extensibility
-- Can domain-specific rubric variants be added without breaking the core contract?
-- Does the scaffold preserve a stable core while allowing purpose-specific extensions?
+5. Honesty of automation claims
+- Does the repository avoid pretending a fully automatic runtime engine exists when it does not?
+- Are current automation limits and human-in-the-loop expectations stated plainly?
 
-6. Documentation quality
-- Are the starting steps easy to follow?
-- Are the main rules visible in the right files?
+6. Extensibility
+- Can domain-specific rubrics, skills, and project types be added without breaking the core loop?
+- Does the Canon catalog stay broad and legible as the scaffold grows?
+
+7. Documentation quality
+- Are the root docs, scaffold docs, and AGENTS contracts consistent with each other?
+- Are the main rules visible in the files where operators will actually look?
 
 Scoring guidance:
-- Strong: the repo is understandable and reusable without extra explanation.
-- Medium: the concept is promising but some workflow steps still rely on interpretation.
-- Weak: the purpose/rubric/run model remains ambiguous or internally inconsistent.
+- Strong: a user can run a downstream application project with a clear autonomous loop and no hidden assumptions.
+- Medium: the loop is promising but some routing, state, or promotion behavior still relies on interpretation.
+- Weak: the purpose-first delivery model remains ambiguous or the scaffold overstates what is automated.

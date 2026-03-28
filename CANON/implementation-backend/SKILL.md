@@ -29,6 +29,14 @@ If no support files are needed, say `none` explicitly. Final outputs must report
 If runtime behavior matters, record baseline evidence, consumer impact, idempotency expectations, and bounded runtime behavior before calling the seam complete.
 </NON-NEGOTIABLE>
 
+<NON-NEGOTIABLE>
+Do not let one class, service, handler, or job absorb orchestration, policy, persistence, formatting, and transport concerns by default. Separate runtime edges from domain behavior before the seam calcifies.
+</NON-NEGOTIABLE>
+
+<CHANGE-RADIUS-GATE>
+If the implementation expands beyond one primary API, job, adapter, or persistence seam, adds a new owner, or changes new consumers not named in the plan, stop and route back to planning-and-scoping.
+</CHANGE-RADIUS-GATE>
+
 <DISCIPLINE-GATE>
 root_cause_or_failure_mode_is_named_before_fix.
 red_green_proof_is_required_when_behavior_changes.
@@ -89,6 +97,7 @@ INPUT := { seam, dependencies, consumers, rollback_sensitivity, runtime_expectat
 
 IF seam_is_not_explicit OR verification_path_is_missing THEN STOP("clarify the backend seam first")
 IF behavior_change_or_bug_fix AND root_cause_or_failure_mode_is_implicit THEN STOP("name the failure mode before fixing")
+IF change_radius_exceeds_one_primary_seam OR newly_affected_consumers_are_unplanned THEN ROUTE -> planning-and-scoping
 
 BOUNDARY := DEFINE(
   validation,
@@ -97,6 +106,8 @@ BOUNDARY := DEFINE(
   data_assumptions,
   compatibility_risk,
   irreducible_core_of_the_seam,
+  responsibility_split,
+  file_or_class_split_trigger,
   existing_platform_or_capability_reused_or_rejected_with_reason
 )
 
@@ -152,6 +163,7 @@ Return a backend delivery note with:
 - files read before coding
 - why each file was loaded
 - seam implemented
+- responsibility split and file/class split decision
 - contracts and edge cases covered
 - irreducible core and reuse decision
 - proof run
@@ -159,6 +171,7 @@ Return a backend delivery note with:
 - wrote minimal code to pass
 - compatibility or consumer risk
 - docs or release implications
+- change radius and any reroute trigger
 - next owner or next skill
 - files actually used
 

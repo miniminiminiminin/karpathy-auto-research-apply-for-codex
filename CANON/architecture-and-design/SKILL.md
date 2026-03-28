@@ -25,6 +25,7 @@ Do not route to implementation while the public seam, replacement boundary, depe
 Do not let implementation discover contract edge cases.
 Do not leave observability or rollback generic.
 Do not claim the architecture is "obvious" to skip alternatives.
+Do not start coding from a flat placeholder structure when the seam already implies distinct responsibilities or future extension points.
 </HARD-GATE>
 
 <NON-NEGOTIABLE>
@@ -98,15 +99,16 @@ These thoughts mean STOP: you're rationalizing.
 9. CHECK(contract_ownership, dependency_direction, module_count_justification, observability_and_rollback, security_exposure, downstream_consumers, host_or_manifest_seams, execution_model_compatibility)
 10. CHECK(maintainability := manageable_size + readable_structure + changeability_after_time)
 11. CHECK(robustness := graceful_failure + essential_dependency_colocation + nonessential_dependency_separation)
-12. APPLY_GUARDRAILS(cost_cap, timeout, retry, fallback, shadow_mode, promotion_grading) IF autonomy_or_high_cost_runtime_path = TRUE
-13. RECORD_PLANES(control_plane, execution_plane, prompt_policy_plane, permission_plane) IF runtime_is_interactive OR agent_driven
-14. RECORD_BRIDGE(direct_call OR command_bridge OR message_bridge) IF runtime_is_interactive OR agent_driven
-15. DEFINE(migration := first_increment + coexistence_or_cutover + rollback_trigger + rollback_owner)
-16. ROUTE ->
+12. CHECK(scaffold_shape := entrypoint + owned_subseams + extension_points + split_triggers_for_large_or_multi_responsibility_units)
+13. APPLY_GUARDRAILS(cost_cap, timeout, retry, fallback, shadow_mode, promotion_grading) IF autonomy_or_high_cost_runtime_path = TRUE
+14. RECORD_PLANES(control_plane, execution_plane, prompt_policy_plane, permission_plane) IF runtime_is_interactive OR agent_driven
+15. RECORD_BRIDGE(direct_call OR command_bridge OR message_bridge) IF runtime_is_interactive OR agent_driven
+16. DEFINE(migration := first_increment + coexistence_or_cutover + rollback_trigger + rollback_owner)
+17. ROUTE ->
   implementation-frontend IF seam_is_client_facing
   implementation-backend IF seam_is_backend_or_contract_facing
   planning-and-scoping IF execution_boundary_is_not_yet_operable
-17. STOP("design note is ready for the next owner")
+18. STOP("design note is ready for the next owner")
 ```
 
 ## Choose Roles
@@ -150,6 +152,7 @@ Return a design note with:
 - why losing options lost
 - chosen structure
 - module-count and redundancy rationale
+- scaffold shape, owned extension points, and split triggers
 - explicit dependency direction
 - explicit observability baseline
 - graceful-failure and essential-dependency rules

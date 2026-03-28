@@ -1,0 +1,18 @@
+# Bootstrap And Rubric Lock Rules
+
+```text
+PASS IF
+  purpose_exists_before_rubric_generation
+  AND rubric_is_generated_once_before_execution_when_missing
+  AND rubric_scoring_shape_is_fixed_before_iteration_1
+  AND baseline_proof_path_is_recorded_before_project_surface_changes
+  AND planner_executor_evaluator_roles_do_not_rewrite_the_rubric_mid_run
+  AND scaffold_bootstrap_instructions_point_back_to_canonical_Canon_owned_sources
+
+FAIL IF
+  rubric_is_regenerated_mid_run_to_rescue_a_weak_result
+  OR bootstrap_begins_without_purpose
+  OR iteration_starts_without_locked_rubric
+  OR baseline_proof_is_missing
+  OR a_sibling_scaffold_copy_is_treated_as_more_authoritative_than_Canon_owned_bootstrap_rules
+```
