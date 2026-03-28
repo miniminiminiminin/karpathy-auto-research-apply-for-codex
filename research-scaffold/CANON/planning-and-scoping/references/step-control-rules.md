@@ -3,6 +3,7 @@
 ```text
 PASS IF
   only_one_active_step_is_in_progress
+  AND the_active_step_still_belongs_to_the_minimum_useful_slice
   AND every_active_step_is_small_enough_to_execute_without_replanning
   AND adjacent_ideas_are_parked_instead_of_expanding_the_owned_seam
   AND each_step_has_a_clean_stop_point_before_forward_motion
@@ -12,6 +13,7 @@ PASS IF
 
 FAIL IF
   multiple_active_steps_compete_for_attention
+  OR later_nice_to_have_work_has_slipped_into_the_active_step
   OR the_owned_seam_expands_mid_plan
   OR a_handoff_lacks_the_next_owner
 ```

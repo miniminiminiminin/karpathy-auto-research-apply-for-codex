@@ -1,6 +1,12 @@
 # UI State Coverage
 
 ```text
+AUTHORITY := {
+  type := external_summary_plus_house_rule,
+  primary_sources := [accessibility_and_responsive_practice],
+  note := "State coverage is a review framework. It does not replace seam-specific product decisions."
+}
+
 ALWAYS_EVALUATE := {
   initial_or_idle,
   error,
@@ -24,6 +30,7 @@ STATE_COVERAGE := PASS IF
   AND accessibility_signal_is_named
   AND entry_condition_is_named
   AND recovery_or_exit_is_named
+  AND loading_and_async_transition_handling_is_named_when_data_or_mutation_exists
   AND render_cost_or_interaction_latency_is_checked_on_critical_paths
   AND mobile_and_narrow_width_behavior_is_checked
 

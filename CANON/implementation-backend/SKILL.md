@@ -39,6 +39,11 @@ NO_PRODUCTION_CODE_WITHOUT_A_FAILING_TEST_FIRST.
 Do not hide schema drift, null handling, compatibility risk, or undocumented contract changes behind passing tests.
 </ANTI-PATTERN>
 
+<OWNER-BOUNDARY>
+Do not decide release posture, launch timing, or ship versus hold from inside backend implementation.
+If the main uncertainty is rollout shape, rollback confidence, or current runtime readiness, route to `release-and-operations`.
+</OWNER-BOUNDARY>
+
 ## Required Reads
 
 - You MUST read `references/implementation-guardrails.md` before coding when this skill triggers.
@@ -90,7 +95,9 @@ BOUNDARY := DEFINE(
   error_shape,
   side_effects,
   data_assumptions,
-  compatibility_risk
+  compatibility_risk,
+  irreducible_core_of_the_seam,
+  existing_platform_or_capability_reused_or_rejected_with_reason
 )
 
 IF runtime_behavior_matters THEN
@@ -146,6 +153,7 @@ Return a backend delivery note with:
 - why each file was loaded
 - seam implemented
 - contracts and edge cases covered
+- irreducible core and reuse decision
 - proof run
 - watched failing test before implementation
 - wrote minimal code to pass

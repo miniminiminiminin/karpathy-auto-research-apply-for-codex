@@ -39,6 +39,11 @@ NO_PRODUCTION_CODE_WITHOUT_A_FAILING_TEST_FIRST.
 Do not treat a pretty happy path as frontend completeness.
 </ANTI-PATTERN>
 
+<OWNER-BOUNDARY>
+Do not decide product policy, service eligibility, or outcome framing from inside frontend implementation.
+If the main uncertainty is the product rule rather than the seam translation, route back to `product-and-ux`.
+</OWNER-BOUNDARY>
+
 ## Required Reads
 
 - You MUST read `references/implementation-guardrails.md` before coding when this skill triggers.
@@ -55,6 +60,7 @@ Do not treat a pretty happy path as frontend completeness.
 ## Do Not Use
 
 - IF request_is_open_ended_product_discovery THEN ROUTE -> product-and-ux
+- IF approved_ux_exists_but_any_of(named_hierarchy_model, named_typography_roles, named_color_roles, relevant_state_visual_rules, named_breakpoint_behavior, visual_rule_matrix, visual_approval_evidence) IS missing THEN ROUTE -> visual-design
 - IF backend_contract_is_not_stable THEN ROUTE -> architecture-and-design OR implementation-backend
 - IF work_is_review_or_release_gate THEN ROUTE -> quality-and-review
 
@@ -98,7 +104,9 @@ GUARDRAILS := KEEP(
   semantic_structure_intact,
   sensitive_data_out_of_client_storage,
   readable_measure_and_asset_size_expectations_named,
-  primary_emphasis_beats_decorative_treatment
+  primary_emphasis_beats_decorative_treatment,
+  comparable_experience_preserved_across_input_and_context,
+  user_control_not_suppressed_for_zoom_motion_or_alternate_path
 )
 
 IF new_dependency OR caching_layer OR rendering_strategy materially_changes_the_seam THEN ROUTE -> planning-and-scoping
@@ -122,7 +130,7 @@ STOP("frontend delivery note is ready")
 ## Choose Roles
 
 - `IF default_frontend_build THEN use agents/software-engineer-frontend.md`
-- `IF state_flow_or_visual_intent_needs_implementation_alignment THEN use agents/ui-ux-designer.md`
+- `IF state_flow_or_low_level_visual_intent_needs_implementation_alignment AFTER visual direction is approved THEN use agents/ui-ux-designer.md`
 - `IF interaction_proof_accessibility_or_regression_is_weak THEN use agents/qa.md`
 
 ## Choose Assets
@@ -151,6 +159,7 @@ Return a frontend delivery note with:
 - why each file was loaded
 - seam implemented
 - states and accessibility coverage
+- comparable experience and user-control coverage
 - proof run
 - watched failing test before implementation
 - wrote minimal code to pass

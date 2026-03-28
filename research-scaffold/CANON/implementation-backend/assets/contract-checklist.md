@@ -3,6 +3,8 @@
 ```text
 CONTRACT := {
   seam,
+  irreducible_core,
+  existing_capability_reused_or_rejected_with_reason,
   consumer_list,
   producer_list,
   failing_or_blocked_case_recorded_before_fix,
@@ -18,6 +20,8 @@ CONTRACT := {
 
 PASS IF
   public_contract_is_named
+  AND irreducible_core_is_named
+  AND existing_capability_reused_or_rejected_with_reason_is_named
   AND hidden_dependency_is_avoided
   AND contract_is_parseable_or_inspectable
   AND watched_test_fail_before_implementation
@@ -32,10 +36,13 @@ PASS IF
   AND bounded_runtime_behavior_is_recorded
   AND runtime_proof_is_present
   AND edge_cases_are_covered
+  AND additive_evolution_is_preferred_or_breaking_change_is_explicitly_approved
   AND performance_note_is_added_when_relevant
 
 FAIL IF
   public_contract_is_implicit
+  OR irreducible_core_is_missing
+  OR existing_capability_reused_or_rejected_with_reason_is_missing
   OR watched_test_fail_before_implementation IS missing
   OR validation_path_is_missing
   OR failure_path_is_missing

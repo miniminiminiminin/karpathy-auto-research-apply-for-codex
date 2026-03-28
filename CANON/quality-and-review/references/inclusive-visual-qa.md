@@ -9,6 +9,8 @@ CHECKS := PASS IF
   no_stereotype_defaults_or_tokenized_representation
   AND no_cloned_faces_nonsensical_text_or_context_mismatch
   AND contrast_legibility_and_motion_comfort_remain_acceptable
+  AND key_state_or_status_meaning_is_not_color_only
+  AND user_control_over_motion_or_playback_is_preserved_when_relevant
   AND visual_supports_the_task_instead_of_distracting_from_it
 
 DECISION_RULE :=

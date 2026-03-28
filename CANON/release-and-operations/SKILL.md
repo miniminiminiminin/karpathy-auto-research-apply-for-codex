@@ -31,6 +31,11 @@ Do not collapse release, incident response, and stakeholder communication into o
 Do not let build success, one green check, or old staging notes stand in for current release evidence. Readiness requires fresh runtime evidence, explicit risk level, and a workable rollback path.
 </NON-NEGOTIABLE>
 
+<OWNER-BOUNDARY>
+Do not redesign implementation or product scope from inside release operations.
+Release owns current evidence, rollout and rollback choice, user-impact posture, and follow-up cadence; remediation design belongs to implementation, planning, or product owners.
+</OWNER-BOUNDARY>
+
 <WORKSPACE-GATE>
 isolated_workspace_readiness_must_be_checked_before_execution_or_release_completion.
 </WORKSPACE-GATE>
@@ -86,10 +91,10 @@ STEP_0 := declare(support_files := exact assets/ + references/ set OR none)
 STEP_0A := read(required_assets_and_references_before_operating_decision)
 STEP_0B := record(why_each_declared_file_was_loaded)
 STEP_1 := identify(ship_candidate, release_owner)
-STEP_2 := gather(verification_status, risk_level, unresolved_defects, runtime_notes, observability, rollout_shape, rollback_owner, rollback_method, worktree_or_workspace_path, workspace_isolation_status)
+STEP_2 := gather(verification_status, risk_level, unresolved_defects, runtime_notes, observability, rollout_shape, rollback_owner, rollback_method, worktree_or_workspace_path, workspace_isolation_status, evidence_source, uncertainty_label)
 STEP_3 := choose(decision := ship OR ship_with_follow_up OR hold OR do_not_ship OR mitigate_and_monitor OR rollback OR merge_locally OR create_pr OR keep_branch_as_is OR discard_with_confirmation)
 STEP_4 := choose(cheapest_safe_rollout_path)
-STEP_5 := record(open_risk_profile, current_user_impact, first_follow_up_action, branch_disposition_option)
+STEP_5 := record(open_risk_profile, current_user_impact, first_follow_up_action, branch_disposition_option, monitoring_owner, evidence_timeframe, next_signal_review_time, threshold_trigger, threshold_action, sustainability_note_when_operationally_material, sustainability_decision_or_mitigation)
 
 IF risk_level = medium OR risk_level = high THEN
   record(before_after_state, exact_rollback_instructions, recovery_verifier)
@@ -186,8 +191,13 @@ Return a release record with:
 - rollout shape
 - current severity or incident state, if applicable
 - open risks
+- evidence source and uncertainty label
 - rollback owner
 - rollback method
+- monitoring owner
+- next signal review time
+- threshold trigger and threshold action
+- sustainability decision or mitigation when material
 - decision
 - explicit branch exit option
 - first follow-up action

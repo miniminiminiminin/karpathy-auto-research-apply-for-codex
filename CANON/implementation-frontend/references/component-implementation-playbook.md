@@ -1,6 +1,11 @@
 # Component Implementation Playbook
 
 ```text
+AUTHORITY := {
+  type := mixed_execution_guide_and_house_style,
+  note := "Semantic structure, state clarity, and accessibility are normative. Several visual hierarchy heuristics are local policy."
+}
+
 PREPARE_SEAM := {
   state_component_purpose_in_one_sentence,
   name_framework_or_runtime_expectation,
@@ -55,5 +60,5 @@ GUARDRAILS := PASS IF
   AND overlap_is_reserved_for_real_surface_transitions_or_focus_moments_not_for_random_internal_collisions
   AND overlapping_images_or_cards_keep_background_colored_buffer_space_so_touching_edges_do_not_clash
   AND component_overrides_prefer_spacing_background_or_shadow_before_extra_borders
-  AND accent_borders_are_sparse_supporting_signals_not_the_main_structure
+  AND accent_borders_are_sparse_supporting_signals_not_the_main_structure_unless_brand_or_data_encoding_requires_otherwise
 ```

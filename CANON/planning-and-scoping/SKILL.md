@@ -44,6 +44,11 @@ If no support files are needed, say `none` explicitly. Final outputs must report
 Quote the approved requirement, name the seam, name the owned files or surface, and state the non-goals. Planning is boundary control, not wishlist expansion.
 </NON-NEGOTIABLE>
 
+<OWNER-BOUNDARY>
+Do not decide module boundaries, public contracts, or replacement architecture from inside planning.
+If the active uncertainty is about seam shape rather than minimum useful slice, route back to `architecture-and-design`.
+</OWNER-BOUNDARY>
+
 <NON-NEGOTIABLE>
 After the design, the next move is implementation planning. Do NOT invoke any other implementation skill until the direction package has been reviewed and explicitly approved.
 </NON-NEGOTIABLE>
@@ -73,6 +78,7 @@ These thoughts mean STOP: you're rationalizing.
 - You MUST start from `assets/plan-record.md` before sequencing work. Add `assets/owned-slice.md` only when the plan hands off one bounded slice.
 - You MUST read `assets/task-breakdown-stub.md` before writing bite-sized execution steps or chunked plan sections.
 - You MUST read `references/step-control-rules.md` before finalizing the active step, handoff package, or cut point.
+- You MUST read `references/minimum-viable-slice-rules.md` before finalizing the first active slice or when the plan is tempted to widen.
 - Read `references/scope-control-rules.md` when the plan is widening, when hidden refactors appear, or when the active step feels vague.
 - Read `references/dependency-risk-review.md` when blockers, approvals, or blast radius may reorder the plan.
 
@@ -101,7 +107,7 @@ Before defining tasks, map out which files will be created or modified and what 
 - Files that change together should live together. Split by responsibility, not by technical layer.
 - In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure, but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
 
-This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
+This structure informs execution decomposition only. If deciding this structure would change module boundaries, public contracts, or replacement seams, route back to `architecture-and-design` first. Each task should produce self-contained changes that make sense independently.
 
 ## Bite-Sized Task Granularity
 
@@ -155,16 +161,18 @@ ELSE:
 5. REQUIRE(design_presented_and_user_approved)
 6. QUOTE(source_requirement_or_decision, freshness, approval_owner)
 7. DEFINE(decision_to_unlock, owned_seam, owned_files_or_surface, non_goals)
-8. MAP(file_structure := created_files + modified_files + tests + responsibilities)
-9. WRITE(acceptance := observable_behavior + exact_proof_path + approval_owner)
-10. CHECK(blockers, dependency_risks, producer_or_consumer_blast_radius)
-11. REDUCE(work) UNTIL active_step_is_one_owned_action_with_one_proof_path_and_one_clean_stop_point
-12. WRITE(bite_sized_steps := one_action_per_step_with_exact_commands_and_expected_signals)
-13. NAME(exact_executor, exact_verifier, exact_receiver)
-14. RECORD(active_step, parked_follow_ups, handoff_target, next_skill IN assets/plan-record.md)
-15. REVIEW(plan_chunks) UNTIL approved OR loop_exceeds_five_iterations
-16. ROUTE -> multi-agent-orchestration IF a later parked step becomes_parallel_safe
-17. STOP("re-scope the plan") IF the active step expands, loses ownership, or loses its proof path
+8. NAME(minimum_useful_slice, reuse_before_rebuild_decision, redundant_work_to_avoid)
+9. MAP(file_structure := created_files + modified_files + tests + responsibilities)
+10. WRITE(acceptance := observable_behavior + exact_proof_path + approval_owner)
+11. CHECK(blockers, dependency_risks, producer_or_consumer_blast_radius)
+12. REDUCE(work) UNTIL active_step_is_one_owned_action_with_one_proof_path_and_one_clean_stop_point
+13. WRITE(bite_sized_steps := one_action_per_step_with_exact_commands_and_expected_signals)
+14. NAME(exact_executor, exact_verifier, exact_receiver)
+15. RECORD(active_step, parked_follow_ups, handoff_target, next_skill IN assets/plan-record.md)
+16. REVIEW(plan_chunks) UNTIL approved OR loop_exceeds_five_iterations
+17. ROUTE -> intake-and-routing OR architecture-and-design IF review_loop_exceeds_five_iterations
+18. ROUTE -> multi-agent-orchestration IF a later parked step becomes_parallel_safe
+19. STOP("re-scope the plan") IF the active step expands, loses ownership, loses its proof path, OR stops being_the_minimum_useful_slice
 ```
 
 ## Plan Review Loop
@@ -223,6 +231,7 @@ Return a plan record with:
 - plan header fields
 - seam, owned files or surface, and non-goals
 - exact file structure and responsibilities
+- minimum useful slice and reuse-before-rebuild rationale
 - exact acceptance and exact proof path
 - one active step only
 - bite-sized task steps with exact commands and expected signals

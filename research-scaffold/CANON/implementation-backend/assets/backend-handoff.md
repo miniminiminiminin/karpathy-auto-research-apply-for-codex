@@ -21,6 +21,8 @@ CONTRACT := {
   entrypoint,
   input_shape,
   output_shape,
+  irreducible_core,
+  existing_capability_reused_or_rejected_with_reason,
   dependency_edges,
   failure_mode,
   actionable_error_behavior,
@@ -36,6 +38,7 @@ DELIVERY := {
   side_effect_boundaries,
   baseline_evidence,
   bounded_runtime_behavior,
+  observability_or_drift_signal,
   query_or_caching_notes,
   static_validation_proof,
   required_follow_up,
@@ -64,4 +67,5 @@ PASS IF
 FAIL IF
   SUPPORT.files_actually_used IS missing
   OR CONTRACT.failure_mode IS implicit
+  OR CONTRACT.irreducible_core IS implicit
 ```

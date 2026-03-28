@@ -4,6 +4,8 @@
 PASS IF
   approved_inputs_are_the_starting_point
   AND audience_is_named
+  AND minimum_useful_slice_is_named_before_task_expansion
+  AND reuse_before_rebuild_is_checked_before_new_work_is_added
   AND target_seam_is_defined_before_tasks
   AND non_goals_are_explicit
   AND source_to_acceptance_to_proof_is_traceable
@@ -13,6 +15,7 @@ PASS IF
 
 FAIL IF
   while_were_here_logic_appears
+  OR the_current_slice_is_not_the_irreducible_core
   OR future_proofing_replaces_scope_control
   OR hidden_refactors_have_no_acceptance_owner
   OR stale_plan_or_stale_approval_is_reused_without_refresh

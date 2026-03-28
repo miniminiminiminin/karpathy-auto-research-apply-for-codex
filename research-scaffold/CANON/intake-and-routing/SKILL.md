@@ -38,6 +38,11 @@ Unnamed support files are out of contract and must not be relied on.
 If no support files are needed, say `none` explicitly. Final outputs must report the declared set, the files actually read, and the files actually used.
 </NON-NEGOTIABLE>
 
+<OWNER-BOUNDARY>
+Do not let intake quietly become planning, architecture, implementation, or repo-wide skill editing.
+If the request is to revise CANON itself, absorb external principle libraries, or repackage the skill system across owners, route to `skillsmith` after restating the seam.
+</OWNER-BOUNDARY>
+
 ## Red Flags
 
 These thoughts mean STOP: you're rationalizing.
@@ -74,6 +79,8 @@ ELSE IF runtime_impact OR incident_coordination dominates:
   ROUTE -> release-and-operations
 ELSE IF evidence_is_incomplete OR acceptance_risk dominates:
   ROUTE -> quality-and-review
+ELSE IF request_is_repo_wide_canon_revision OR skill_system_absorption OR multi_owner_skill_maintenance:
+  ROUTE -> skillsmith
 ELSE IF multiple_owned_outcomes_can_progress_in_parallel:
   ROUTE -> multi-agent-orchestration
 ELSE:
@@ -88,9 +95,12 @@ ELSE:
 3. RECORD(why_each_declared_file_was_loaded)
 4. RESTATE(request := target_outcome + success_condition + constraints + explicit_non_goals)
 5. CHECK(current_context, existing_constraints, approval_state, evidence_state)
-6. IDENTIFY(dominant_track := product OR planning OR architecture OR implementation OR review OR release OR orchestration)
+6. IDENTIFY(dominant_track := product-and-ux OR visual-design OR planning-and-scoping OR architecture-and-design OR implementation OR autonomous-app-loop OR quality-and-review OR release-and-operations OR multi-agent-orchestration OR skillsmith)
 7. RECORD(missing_inputs := approval OR boundary OR proof_expectation OR design_decision OR stakeholder_owner OR severity)
+7A. CLASSIFY(request_scale := single_owner_single_batch OR single_owner_multi_batch OR mixed_owner_multi_batch)
+7B. RECORD(active_batch_now, parked_follow_ups, decomposition_seam) IF request_spans_multiple_owners_or_is_oversized
 8. ROUTE -> product-and-ux IF request_implies_new_behavior OR new_feature_direction AND direction_or_approval_is_not_explicit
+8A. ROUTE -> skillsmith IF request_is_repo_wide_canon_revision OR skill_system_absorption OR owner_split_is_the_real_work
 9. ASK(one_focused_question) IF material_ambiguity_remains = TRUE
 10. CHOOSE(one_next_skill)
 11. RECORD(why_alternatives_lost_now IN assets/intake-record.md OR assets/routing-decision.md)
@@ -120,7 +130,9 @@ Return an intake record with:
 - request restatement
 - target outcome and success condition
 - current constraints and explicit non-goals
+- request scale and decomposition seam
 - missing boundary or evidence
+- active batch now and parked follow-ups when the request is oversized
 - considered next skills
 - chosen next skill
 - why nearby alternatives lost

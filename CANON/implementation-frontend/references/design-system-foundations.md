@@ -1,6 +1,12 @@
 # Design System Foundations
 
 ```text
+AUTHORITY := {
+  type := mixed_external_principles_and_house_style,
+  primary_sources := [design_system_practice, accessibility_baselines],
+  note := "Hierarchy, token, and accessibility rules are normative. Visual taste guidance is local policy."
+}
+
 FOUNDATION_ORDER :=
   1 -> tokens
   2 -> primitives
@@ -51,7 +57,7 @@ GUARDRAILS := PASS IF
   AND component_widths_follow_content_needs_before_grid_fractions
   AND relative_scaling_is_overridden_when_breakpoint_context_changes_the_right_proportion
   AND borders_are_not_the_default_answer_when_spacing_background_or_shadow_can_express_separation
-  AND crisp_offset_shadow_tokens_are_allowed_when_flat_interfaces_need_depth_without_soft_blur
+  AND depth_treatments_are_named_as_house_style_choices_not_universal_requirements
   AND theme_mode_compatibility_is_explicit_when_theming_exists
   AND transform_or_opacity_motion_is_preferred_when_animation_is_used
 ```

@@ -1,0 +1,3 @@
+assistant:
+  short_description: "Define or critique visual direction so product slices keep a clear hierarchy, tone, and implementation-resistant quality bar."
+  default_prompt: "Use this skill to turn approved UX intent into explicit visual rules, critique generic UI drift, and return an approval-ready visual direction note."

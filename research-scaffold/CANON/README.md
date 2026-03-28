@@ -13,39 +13,41 @@ This exported SoloPilot pack keeps a small, standalone skill catalog under `.cod
 - when delegated work is involved, dispatch with explicit repo-local skills and support paths rather than generic role guesses
 - compile useful `superpowers` behavior into existing repo-local skills first
 - do not present imported `superpowers` as a second public catalog
-- branch exit, isolated workspace setup, and release completion stay inside repo-local planning or release owners
+- keep the skill system optimized for one goal: improving a project's ability to perform `purpose.txt`
+- compile durable external principle libraries into existing owners with one active batch at a time and explicit parked follow-ups
 
 ## Entry Order
 
-1. Start with `intake-and-routing` when the request is new or ambiguous.
-2. Move to `product-and-ux` when the request implies creative work, new behavior, flow shaping, messaging, or design direction even if the scope looks small.
-3. Move to `planning-and-scoping` only after the direction has been presented and approved.
-4. Use `architecture-and-design` when seams, contracts, or trade-offs are still open.
-5. Use `implementation-*` only after planning is execution-ready, with failing tests first and exact proof paths.
-6. Use `quality-and-review` for ordered review, fresh verification before completion claims, debugging discipline, review request/response handling, and acceptance gating.
-7. Use `release-and-operations` for ship, hold, rollback, incident follow-up, and branch exit decisions after fresh verification.
-8. Use `multi-agent-orchestration` only when decomposition clearly improves delivery and slices can carry fresh isolated context.
-9. If a failure, repeated difficulty, or environment quirk changes future behavior, use `failure-memory` before closing the task.
-10. Use `skillsmith` when the task is to create or revise the skill system itself.
+1. Start with `intake-and-routing` when the request, project state, or next slice is still unclear.
+2. Move to `skillsmith` when the task is repo-wide CANON revision, external principle absorption, or skill-system maintenance across multiple owners.
+3. Move to `product-and-ux` when the purpose still needs a direction package, UX framing, or user-facing trade-offs.
+4. Move to `visual-design` when hierarchy, typography, color, density, or art direction still need explicit rules before implementation.
+5. Move to `planning-and-scoping` only after the direction has been presented and approved.
+6. Use `architecture-and-design` when seams, contracts, topology, or rollback shape are still open.
+7. Use `autonomous-app-loop` when one bounded slice is execution-ready and the next move is a planner -> executor -> evaluator iteration in service of `purpose.txt`.
+8. Use `implementation-*` only when the autonomous loop or plan has already assigned a concrete implementation seam.
+9. Use `quality-and-review` for ordered review, fresh verification before completion claims, and acceptance gates.
+10. Use `release-and-operations` for ship, hold, rollback, and branch-exit decisions after fresh evidence.
+11. Use `multi-agent-orchestration` only when decomposition clearly improves delivery and slices can carry isolated context.
 
 ## Catalog
 
 | Skill | Primary Job | Typical Roles | Typical Phases |
 | --- | --- | --- | --- |
-| `intake-and-routing` | restate a new request and choose the single best next skill | CTO, PM, lead | intake, triage |
+| `intake-and-routing` | restate a new request, choose the single best next skill, and park oversized follow-up seams | CTO, PM, lead | intake, triage |
+| `product-and-ux` | turn evidence into product direction, UX trade-offs, and flow decisions | PM, UX, UI | discovery, design |
+| `visual-design` | turn approved UX intent into explicit visual direction and a visual approval bar | UI, art direction, visual critic | design, critique, approval |
 | `planning-and-scoping` | turn an approved direction into owned seams, non-goals, and proof | CTO, lead, implementer | planning, scoping |
 | `architecture-and-design` | decide seams, contracts, and design trade-offs before implementation | CTO, lead, platform | architecture, design |
+| `autonomous-app-loop` | run one purpose-first planner -> executor -> evaluator iteration and decide promotion | orchestrator, planner, executor, evaluator | execution, scoring, convergence |
 | `implementation-frontend` | implement an approved UI seam with explicit state and accessibility proof | frontend, design-minded engineer | implementation, verification |
 | `implementation-backend` | implement a chosen backend seam with contract-safe verification | backend, platform engineer | implementation, verification |
-| `product-and-ux` | turn evidence into product direction, UX trade-offs, and flow decisions | PM, UX, UI | discovery, design |
 | `quality-and-review` | require fresh proof, ordered review, and acceptance before completion claims | reviewer, QA, lead | testing, review, acceptance |
 | `security-review` | review trust-boundary changes and classify findings or lab follow-up | security reviewer, lead, implementer | review, remediation planning |
 | `security-lab` | reproduce and regress security issues against self-owned Docker lab targets | attacker, defender, reporter | repro, verification, regression |
 | `release-and-operations` | choose ship, hold, mitigate, rollback, or incident follow-up | release, DevOps, QA | release, operations |
 | `multi-agent-orchestration` | dispatch disjoint slices with explicit skills, support paths, and convergence | CTO, lead | orchestration, integration |
-| `skillsmith` | compile or revise repo-local skills with explicit triggers and support files | CTO, skill author | skill design, packaging |
-| `failure-memory` | turn failures and repeated workarounds into reusable repo-local lessons | CTO, reviewer, operator | debugging, review, operations |
-| `batch-production` | run manifest-driven prompt or transformation batches with retries and resume | backend, operator, content systems | planning, implementation, operations |
+| `skillsmith` | compile or revise repo-local skills, owner boundaries, and CANON-wide principle absorption work | CTO, skill author | skill design, packaging, canon maintenance |
 
 ## Packaging Rules
 
@@ -72,6 +74,7 @@ High-quality SoloPilot skills should:
 - refresh stale templates, records, and evidence-oriented references when the decision type or source inputs changed
 - make delegated-work reporting traceable when a skill can dispatch or guide slices
 - return a concrete output contract
+- give visual direction its own owner when hierarchy, tone, or implementation-resistant screen rules would otherwise stay implicit
 
 ## Promotion Rules
 
@@ -92,4 +95,9 @@ High-quality SoloPilot skills should:
   - subagent-driven-development and dispatching-parallel-agents behavior absorbed into `multi-agent-orchestration`
   - using-git-worktrees and executing-plans behavior absorbed into `planning-and-scoping`
   - finishing-a-development-branch behavior absorbed into `release-and-operations`
+  - purpose-first planner/executor/evaluator loop control compiled into `autonomous-app-loop`
+- current external principle absorption status:
+  - `principles.adactio.com` families absorbed into `visual-design`, `product-and-ux`, `architecture-and-design`, `planning-and-scoping`, `implementation-frontend`, `implementation-backend`, `quality-and-review`, `release-and-operations`, and `intake-and-routing`
+  - remaining hardening work stays explicit as deferred owner follow-up rather than hidden catalog claims
+  - current named deferrals include stronger release-side sustainability gates, stricter iterate-with-data thresholds, and any remaining cross-owner hardening discovered by later audits
 - reopen the admission gate only if a new source behavior cannot be compiled into an existing repo-local owner without weakening trigger clarity or output-contract force

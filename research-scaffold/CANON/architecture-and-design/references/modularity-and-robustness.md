@@ -1,0 +1,37 @@
+# Modularity And Robustness
+
+```text
+USE_THIS_REFERENCE IF
+  the_main_decision_is_how_many_modules_should_exist
+  OR maintainability_after_time_is_a_real_risk
+  OR graceful_failure_depends_on_dependency_shape
+  OR essential_and_nonessential_parts_might_be_split_wrong
+
+MODULARITY := PASS IF
+  the_problem_is_divided_into_named_logical_units
+  AND each_unit_has_meaningful_ownership
+  AND reuse_reduces_redundancy_without_hiding_coupling
+  AND module_count_is_justified_by_change_or_failure_behavior_not_taste
+
+MAINTAINABILITY := PASS IF
+  future_humans_can_change_the_structure_without_relearning_the_whole_system
+  AND readable_structure_beats_power_user cleverness_when_both_can_work
+  AND things_changed_together_live_together
+  AND abstractions_do_not_outgrow_operator_comprehension
+
+ROBUSTNESS := PASS IF
+  degraded_conditions_are_treated_as_normal_inputs
+  AND essential_information_or_dependencies_are_not_split_across_fragile_boundaries
+  AND nonessential_dependencies_can_fail_without_destroying_core_understanding
+  AND the_seam_names_how_failures_are_detected_and_recovered
+
+DO_LESS := PASS IF
+  irreducible_core_is_named_before_new_modules_are_added
+  AND reuse_or_existing_platform_paths_are_rejected_explicitly_before_reinvention
+
+FAIL IF
+  modules_exist_only_to_match_layers_or_org_chart
+  OR readability_is_sacrificed_for_power_user_flexibility_without_payoff
+  OR robustness_is_reduced_to_generic_logging
+  OR nonessential_features_can_break_the_core_outcome
+```

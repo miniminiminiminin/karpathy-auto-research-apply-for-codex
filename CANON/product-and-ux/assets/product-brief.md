@@ -17,6 +17,7 @@ PASS IF
   AND job_to_be_done IS explicit
   AND decision_question IS explicit
   AND evidence_basis IS explicit
+  AND service_outcome IS explicit
   AND next_skill IS explicit
 
 FAIL IF
@@ -25,6 +26,7 @@ FAIL IF
   OR user IS missing
   OR decision_question IS missing
   OR evidence_basis IS missing
+  OR service_outcome IS missing
   OR next_skill IS missing
 
 ## Outcome
@@ -56,6 +58,18 @@ FAIL IF
 - design sections reviewed:
 - section-by-section feedback:
 - flow seam:
+- service outcome:
+- service promise or scope:
+- findability notes:
+- expectation-setting notes:
+- minimum-step notes:
+- no-dead-end handling:
+- meaningful choice or alternative path:
+- assistance path:
+- decision explanation rules:
+- no-prior-knowledge risk:
+- continuity or change-response notes:
+- comparable experience risk:
 - primary interaction:
 - pattern families:
 - human factors:

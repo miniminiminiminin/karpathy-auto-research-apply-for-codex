@@ -17,6 +17,8 @@ TARGET := {
   current_state_evidence,
   current_risks_or_bottlenecks,
   target_state_framing,
+  module_count_rationale,
+  redundancy_risk,
   dependency_direction,
   workflow_graph_or_node_types,
   runtime_surface,
@@ -37,7 +39,9 @@ ALTERNATIVES := {
 
 TRADE_OFFS := {
   replaceability,
+  maintainability_after_time,
   hidden_coupling_risk,
+  redundancy_vs_reuse,
   implementation_cost,
   verification_impact,
   bridge_vs_direct_call,
@@ -56,6 +60,9 @@ MIGRATION := {
 OBSERVABILITY := {
   seam_signals,
   error_categories,
+  graceful_failure_modes,
+  essential_dependencies_that_must_not_split,
+  nonessential_dependencies_that_may_split,
   alert_owner,
   acceptance_metrics
 }
@@ -77,6 +84,7 @@ PASS IF
   AND SUPPORT.why_each_file_was_loaded
   AND TARGET.seam
   AND TARGET.current_state_evidence
+  AND TARGET.module_count_rationale
   AND TARGET.dependency_direction
   AND ALTERNATIVES.recommended_choice
   AND ALTERNATIVES.why_losing_options_lost_now
@@ -90,7 +98,10 @@ PASS IF
 FAIL IF
   SUPPORT.files_actually_used IS missing
   OR TARGET.current_state_evidence IS generic
+  OR TARGET.module_count_rationale IS implicit
   OR TARGET.dependency_direction IS implicit
   OR MIGRATION.rollback_plan IS generic
+  OR OBSERVABILITY.graceful_failure_modes IS missing
+  OR OBSERVABILITY.graceful_failure_modes IS generic
   OR OBSERVABILITY.acceptance_metrics IS missing
 ```

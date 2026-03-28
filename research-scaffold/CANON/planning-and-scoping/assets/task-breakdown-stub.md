@@ -14,6 +14,7 @@ FRAMING := {
 GOAL := {
   target,
   seam,
+  minimum_useful_slice,
   source_requirement_or_artifact,
   owned_proof_path,
   created_files,
@@ -45,6 +46,7 @@ TRACEABILITY := {
 
 BOUNDARIES := {
   non_goals,
+  redundant_work_to_avoid,
   parked_follow_ups,
   blockers,
   dependency_order,
@@ -56,8 +58,9 @@ BOUNDARIES := {
 PASS IF
   FRAMING.feature_name
   AND FRAMING.goal_line
-  CURRENT_STEP.active_step
+  AND CURRENT_STEP.active_step
   AND CURRENT_STEP.bite_sized_steps
+  AND BOUNDARIES.redundant_work_to_avoid
   AND CURRENT_STEP.clean_stop_point
   AND TRACEABILITY.proof_artifact_or_command
 

@@ -22,7 +22,9 @@
 ## Verification
 
 - recovery proof:
+- evidence timeframe:
 - monitoring check:
+- recovery verifier:
 - follow-up owner:
 - result:
 

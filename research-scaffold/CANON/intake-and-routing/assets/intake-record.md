@@ -20,6 +20,10 @@ REQUEST := {
 CLASSIFICATION := {
   context_checked_before_routing,
   dominant_track,
+  request_scale,
+  decomposition_seam,
+  active_batch_now,
+  parked_follow_ups,
   considered_next_skills,
   likely_next_skill,
   route_type,
@@ -33,6 +37,11 @@ CLASSIFICATION := {
   blocked_actions_before_routing,
   escalation_needed
 }
+
+REQUEST_SCALE_RULE :=
+  single_owner_single_batch -> one_owner_one_active_batch_now
+  single_owner_multi_batch -> one_owner_now_with_parked_follow_ups
+  mixed_owner_multi_batch -> one_active_batch_now_and_named_owners_for_parked_follow_ups
 
 OWNERSHIP := {
   decision_owner,
@@ -54,6 +63,7 @@ PASS IF
   AND SUPPORT.why_each_file_was_loaded
   AND REQUEST.target_outcome
   AND REQUEST.success_condition
+  AND CLASSIFICATION.request_scale
   AND CLASSIFICATION.considered_next_skills
   AND CLASSIFICATION.likely_next_skill
   AND CLASSIFICATION.route_rationale
@@ -63,6 +73,8 @@ PASS IF
 FAIL IF
   REQUEST.explicit_non_goals IS missing
   OR CLASSIFICATION.material_ambiguity IS hidden
+  OR CLASSIFICATION.active_batch_now IS missing_when_request_is_oversized
+  OR CLASSIFICATION.parked_follow_ups IS missing_when_request_spans_multiple_batches
   OR CLASSIFICATION.blocked_actions_before_routing IS missing
   OR CLASSIFICATION.rejected_because IS missing
   OR SUPPORT.files_read_before_routing IS missing

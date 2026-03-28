@@ -1,13 +1,19 @@
 # Responsive Layout Patterns
 
 ```text
+AUTHORITY := {
+  type := external_summary_plus_house_rule,
+  primary_sources := [WCAG_reflow, WCAG_target_size, MDN, web.dev],
+  note := "Treat numeric thresholds as explicit policy, not implied defaults."
+}
+
 INPUT := {
   mobile_content_priority,
   breakpoint_contract,
   navigation_behavior,
   image_or_media_behavior,
   css_method_or_framework,
-  browser_support_assumption,
+  browser_support_policy_or_baseline,
   presentation_proof
 }
 
@@ -17,6 +23,7 @@ WORKING_ORDER :=
   3 -> extreme_content_and_zoom_cases
 
 CHECKS := PASS IF
+  mobile_content_priority_is_named_before_breakpoint_expansion
   content_width_matches_readability_before_canvas_fill
   AND readable_measure_survives_breakpoint_expansion_without_turning_into_canvas_fill
   AND supporting_content_can_move_to_adjacent_columns_before_core_content_is_widened
@@ -31,12 +38,17 @@ CHECKS := PASS IF
   AND screenshots_or_media_are_cropped_or_reframed_before_being_scaled_to_unreadability
   AND icons_logos_and_screenshots_render_near_intended_size_or_switch_to_a_simpler_representation
   AND asset_size_rules_prevent_icons_logos_and_screenshots_from_drifting_into_generic_fill_behavior
-  AND interactive_targets_stay_at_or_above_44px_when_touch_is_expected
+  AND target_size_policy_is_explicit_for_interactive_surfaces
+  AND touch_primary_or_high_risk_surfaces_prefer_targets_at_or_above_44px
+  AND baseline_accessibility_target_size_does_not_drop_below_24px_without_documented_exception
   AND zoom_to_200_percent_preserves_meaning_and_control_access
+  AND the_same_core_task_can_be_completed_without_wide_screen_assumptions
+  AND reflow_check_at_320_css_px_or_equivalent_zoom_is_named_when_required_by_policy
 
 PROOF := {
   mobile_tablet_desktop_manual_check,
   zoom_check,
+  reflow_or_320_css_px_check,
   image_sizing_and_aspect_ratio_check,
   screenshot_or_media_cropping_check,
   late_loading_media_overflow_check,

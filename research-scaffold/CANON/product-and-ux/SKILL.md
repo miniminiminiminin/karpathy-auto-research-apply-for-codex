@@ -52,12 +52,14 @@ Every project goes through this process. A todo list, a single-function utility,
 ## Do Not Use
 
 - low-level implementation after the experience is already approved
+- detailed visual art direction after the UX direction is already approved
 - backend-only contract work
 - release or runtime approval
 
 ## Required Reads
 
 - You MUST read `references/signal-translation-rules.md` before reducing research, feedback, competitive, design-direction, or cross-team packaging signals into product direction.
+- You MUST read `references/service-outcome-principles.md` when service clarity, expectation-setting, assistance-path design, no-dead-end handling, or comparable task completion is part of the question.
 - You MUST start from `assets/product-brief.md` before shaping direction. Switch to a narrower asset only when the evidence mode is already clear.
 - Read `assets/ux-review.md` when the next move is section-by-section design approval, changes requested, or measurable approval criteria.
 
@@ -70,7 +72,7 @@ You MUST create a task for each of these items and complete them in order:
 3. **Propose 2-3 approaches** with trade-offs and your recommendation
 4. **Present design** in sections scaled to their complexity, get user approval after each section
 5. **Write design direction record** save the validated direction in local assets and route it forward only after approval
-6. **User reviews written direction** ask for approval before planning begins
+6. **User or named approval owner reviews written direction** ask for approval before planning begins
 7. **Transition to implementation planning** route to `planning-and-scoping`
 
 ## Procedure
@@ -87,13 +89,14 @@ STEP_8 := name(decision_question, evidence_mode)
 STEP_9 := define(segment_scope, evidence_strength, limitations, contradictory_signals)
 STEP_10 := compare(2_to_3_approaches, recommended_direction, avoid_list)
 STEP_11 := present(design_sections_scaled_to_complexity)
-STEP_12 := get_user_approval_after_each_section
-STEP_13 := translate(signals -> tradeoffs, recommended_direction, avoid_list, remaining_uncertainty)
-STEP_14 := record(direction_approval_status, approval_owner, approval_notes)
-STEP_15 := package(minimum_guidance)
+STEP_12 := get_user_or_named_approval_owner_review_after_each_section
+STEP_13 := translate(signals -> tradeoffs, service_outcome_rules, recommended_direction, avoid_list, remaining_uncertainty)
+STEP_14 := record(service_purpose, expectation_setting, assistance_path, no_dead_end_handling, comparable_experience_risk, decision_explanation_rules)
+STEP_15 := record(direction_approval_status, approval_owner, approval_notes)
+STEP_16 := package(minimum_guidance)
 
-IF direction_approval_status = approved THEN ROUTE -> planning-and-scoping
-ELSE IF scope_or_handoff_is_next THEN ROUTE -> planning-and-scoping
+IF direction_approval_status = approved AND any_of(named_hierarchy_model, named_typography_roles, named_color_roles, named_state_visual_rules, named_breakpoint_behavior, visual_approval_evidence) IS missing THEN ROUTE -> visual-design
+ELSE IF direction_approval_status = approved THEN ROUTE -> planning-and-scoping
 ELSE STOP("product direction is still incomplete")
 ```
 
@@ -103,7 +106,7 @@ ELSE STOP("product direction is still incomplete")
 - **Multiple choice preferred** Easier to answer than open-ended when possible
 - **YAGNI ruthlessly** Remove unnecessary features from all designs
 - **Explore alternatives** Always propose 2-3 approaches before settling
-- **Incremental validation** Present design, get approval before moving on
+- **Incremental validation** Present design, get user or named approval-owner review before moving on
 - **Be flexible** Go back and clarify when something doesn't make sense
 
 ## Choose Roles
@@ -111,7 +114,7 @@ ELSE STOP("product direction is still incomplete")
 - use `agents/po-pm.md` when the main job is product framing, scope, and trade-off selection
 - use `agents/ux-researcher.md` when evidence gathering or interpretation is the weak point
 - use `agents/content-strategist.md` when messaging, comprehension, or launch language is the seam
-- use `agents/ui-ux-designer.md` when the direction must become concrete interaction or visual guidance
+- use `agents/ui-ux-designer.md` when the direction must become concrete interaction guidance or low-to-mid fidelity hierarchy guidance
 
 ## Choose Assets
 
@@ -132,6 +135,7 @@ ELSE STOP("choose the asset that matches the actual evidence mode")
 IF evidence_mode = research THEN READ -> references/ux-research-methods.md
 ELSE IF evidence_mode = feedback OR evidence_mode = support THEN READ -> references/feedback-synthesis-framework.md OR references/support-signal-synthesis.md
 ELSE IF evidence_mode = trend OR evidence_mode = competitive THEN READ -> references/trend-research-rubric.md
+ELSE IF service_clarity_or_flow_continuity_is_the_main_risk THEN READ -> references/service-outcome-principles.md
 ELSE IF direction_must_resolve_into_ui_rules THEN READ -> references/design-system-methodology.md OR references/mobile-first-experience-principles.md OR references/interaction-accessibility-principles.md OR references/ui-ideation-prompt-patterns.md
 ELSE IF direction_is_still_low_fidelity_or_flow_shaping OR hierarchy_or_state_clarity_is_unproven THEN READ -> references/wireframe-discipline.md
 ELSE IF visual_inputs_must_be_distilled_into_reusable_rules THEN READ -> references/design-system-extraction.md
@@ -150,6 +154,12 @@ Return a product and UX brief with:
 - evidence path and limitations
 - trade-offs
 - recommended direction
+- service purpose and promise
+- expectation-setting notes
+- no-dead-end handling
+- assistance path
+- decision explanation rules
+- comparable experience risk
 - what to avoid
 - remaining uncertainty
 - design sections reviewed and approval status

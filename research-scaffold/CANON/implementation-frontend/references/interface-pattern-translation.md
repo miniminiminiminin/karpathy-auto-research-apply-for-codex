@@ -2,6 +2,8 @@
 
 Turn approved interface direction into seam-level implementation choices without flattening every UI into the same generic component patterns.
 
+Authority: mixed UX translation reference. Pattern families are a local decision aid, not a claim that one published taxonomy owns all interfaces.
+
 ```text
 IF dominant_pattern_family IS implicit THEN STOP("name the pattern family before implementation")
 IF current_location_or_recovery_contract_matters THEN KEEP(wayfinding, escape_hatch, persistence_rules)

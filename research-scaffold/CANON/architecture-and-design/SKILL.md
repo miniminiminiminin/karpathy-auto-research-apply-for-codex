@@ -41,6 +41,11 @@ Record current-state evidence, target-state framing, migration path, rollback pl
 Do not present architecture as stack preference, code proximity, or taste.
 </ANTI-PATTERN>
 
+<OWNER-BOUNDARY>
+Do not turn architecture into task sequencing, sprint slicing, or execution choreography.
+If the main question is minimum viable slice, one active step, or handoff ordering, route to `planning-and-scoping`.
+</OWNER-BOUNDARY>
+
 ## Red Flags
 
 These thoughts mean STOP: you're rationalizing.
@@ -63,6 +68,7 @@ These thoughts mean STOP: you're rationalizing.
 - You MUST read the relevant reference before proceeding:
   - `references/service-decomposition.md` when split versus merge is the main decision
   - `references/platform-contracts.md` when shared contract or host ownership changes
+  - `references/modularity-and-robustness.md` when maintainability, module count, graceful degradation, or essential-versus-separable dependency is the main risk
   - `references/ai-routing-guardrails.md` when autonomy, cost, retry, or fallback rules matter
   - `references/observability-and-reliability-baseline.md` when rollback or runtime evidence shapes the design
 
@@ -89,16 +95,18 @@ These thoughts mean STOP: you're rationalizing.
 6. RECORD(current_state_evidence := seam_behavior + coupling_or_bottleneck_evidence + dependency_or_metric_evidence)
 7. NAME(target_seam := module_boundary OR public_api OR data_contract OR page_flow OR release_gate)
 8. COMPARE(at_least_two_shapes) AND RECORD(why_losing_options_lost_now)
-9. CHECK(contract_ownership, dependency_direction, observability_and_rollback, security_exposure, downstream_consumers, host_or_manifest_seams, execution_model_compatibility)
-10. APPLY_GUARDRAILS(cost_cap, timeout, retry, fallback, shadow_mode, promotion_grading) IF autonomy_or_high_cost_runtime_path = TRUE
-11. RECORD_PLANES(control_plane, execution_plane, prompt_policy_plane, permission_plane) IF runtime_is_interactive OR agent_driven
-12. RECORD_BRIDGE(direct_call OR command_bridge OR message_bridge) IF runtime_is_interactive OR agent_driven
-13. DEFINE(migration := first_increment + coexistence_or_cutover + rollback_trigger + rollback_owner)
-14. ROUTE ->
+9. CHECK(contract_ownership, dependency_direction, module_count_justification, observability_and_rollback, security_exposure, downstream_consumers, host_or_manifest_seams, execution_model_compatibility)
+10. CHECK(maintainability := manageable_size + readable_structure + changeability_after_time)
+11. CHECK(robustness := graceful_failure + essential_dependency_colocation + nonessential_dependency_separation)
+12. APPLY_GUARDRAILS(cost_cap, timeout, retry, fallback, shadow_mode, promotion_grading) IF autonomy_or_high_cost_runtime_path = TRUE
+13. RECORD_PLANES(control_plane, execution_plane, prompt_policy_plane, permission_plane) IF runtime_is_interactive OR agent_driven
+14. RECORD_BRIDGE(direct_call OR command_bridge OR message_bridge) IF runtime_is_interactive OR agent_driven
+15. DEFINE(migration := first_increment + coexistence_or_cutover + rollback_trigger + rollback_owner)
+16. ROUTE ->
   implementation-frontend IF seam_is_client_facing
   implementation-backend IF seam_is_backend_or_contract_facing
   planning-and-scoping IF execution_boundary_is_not_yet_operable
-15. STOP("design note is ready for the next owner")
+17. STOP("design note is ready for the next owner")
 ```
 
 ## Choose Roles
@@ -125,6 +133,7 @@ These thoughts mean STOP: you're rationalizing.
 - `IF IDE_webview_agent_or_design_runtime THEN READ -> references/interactive-design-agent-architecture.md`
 - `IF controller_service_adapter_ui_responsibilities_are_leaking THEN READ -> references/provider-service-tool-separation.md`
 - `IF graph_shaped_or_execution_model_change THEN READ -> references/workflow-graph-and-migration-architecture.md`
+- `IF maintainability_module_count_or_graceful_failure_is_the_main_risk THEN READ -> references/modularity-and-robustness.md`
 - `IF autonomy_cost_retry_or_fallback_matters THEN READ -> references/ai-routing-guardrails.md`
 - `IF runtime_evidence_or_rollback_shape_matters THEN READ -> references/observability-and-reliability-baseline.md`
 
@@ -140,8 +149,10 @@ Return a design note with:
 - alternatives considered
 - why losing options lost
 - chosen structure
+- module-count and redundancy rationale
 - explicit dependency direction
 - explicit observability baseline
+- graceful-failure and essential-dependency rules
 - migration path
 - rollback trigger and rollback owner
 - acceptance conditions
@@ -172,6 +183,7 @@ Local References:
 - `references/interactive-design-agent-architecture.md`
 - `references/provider-service-tool-separation.md`
 - `references/workflow-graph-and-migration-architecture.md`
+- `references/modularity-and-robustness.md`
 - `references/ai-routing-guardrails.md`
 - `references/observability-and-reliability-baseline.md`
 

@@ -43,6 +43,11 @@ fresh_verification_before_completion_claims.
 review_feedback_requires_technical_verification_before_implementation.
 </VERIFICATION-GATE>
 
+<OWNER-BOUNDARY>
+Do not redesign the product or implementation from inside review.
+Review owns acceptance, evidence sufficiency, and comparable-experience rejection logic; remediation design belongs to the implementation or product owner.
+</OWNER-BOUNDARY>
+
 ## The Iron Law
 
 ```text
@@ -121,7 +126,7 @@ STEP_6 := prefer(behavior_level_evidence) OVER(implementation_detail_proof) WHEN
 STEP_7 := verify(review_feedback_against_codebase_reality) IF incoming_change_request = review_feedback
 STEP_8 := identify(full_verification_command_required_for_claim)
 STEP_9 := run_and_read(full_verification_command_fresh)
-STEP_10 := record(proof_freshness, evidence_gaps, unresolved_risks, blocked_reproduction, root_cause_status)
+STEP_10 := record(proof_freshness, evidence_gaps, unresolved_risks, blocked_reproduction, root_cause_status, comparable_experience_risk, user_control_regressions, responsive_survival_gaps)
 STEP_11 := route_to_failure_memory IF debugging_or_verification_workaround_repeats
 STEP_12 := decide(approve OR approve_with_follow_up OR revise OR block)
 
@@ -157,13 +162,13 @@ Before attempting any fix:
 3. Verify before continuing
 4. When you don't know, say so and gather more evidence
 
-### Phase 4: Implementation
+### Phase 4: Remediation Handoff
 
-1. Create failing test case
-2. Implement single fix
-3. Verify fix
-4. If fix doesn't work, return to Phase 1
-5. If 3+ fixes failed, question the architecture
+1. Name the failing acceptance criterion
+2. Name the owner that must fix it
+3. Require fresh verification after the fix
+4. If the same failure repeats, return to Phase 1
+5. If repeated fixes fail, question the architecture or scope owner
 
 ## Review Request Contract
 

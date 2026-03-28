@@ -1,39 +1,38 @@
-# Skills Subtree Instructions
+# CANON Subtree Contract
 
-These instructions apply to every file under `.codex/skills/`.
+These instructions apply to every file under `CANON/**`.
 
 ## Purpose
 
-- Keep skills reusable, imperative, and repo-local.
-- Treat each skill as a routing asset, not as project memory or a run log.
-- Make each skill self-sufficient after `.codex` is copied into another repository.
-- Optimize for a small top-level catalog rather than many narrow subskills.
+- Keep `CANON/` as the reusable operating law for downstream projects.
+- Preserve a small, explicit top-level owner catalog instead of creating narrow duplicate skills.
+- Favor durable routing, decision, proof, and review rules over source-specific prose.
+
+## Owner Discipline
+
+- Respect the current owner map described in `CANON/README.md`.
+- Keep one primary owner per rule family even when multiple skills consume the result.
+- Do not let one owner absorb neighboring concerns just because the source text sounds broad.
+- Route repo-wide Canon maintenance, source absorption, and owner-boundary work through `CANON/skillsmith/**`.
+- Keep deferred hardening explicit rather than hiding it behind completion language.
 
 ## Authoring Rules
 
-- Keep one operating concern per skill directory.
-- Prefer a single-level directory shape: `.codex/skills/<skill-name>/SKILL.md`.
-- Keep the catalog discoverable and broad; new top-level skills must earn their slot instead of duplicating an existing concern.
-- Keep each `description:` trigger-first so routing can distinguish the skill from adjacent phases quickly.
-- Do not require a shared dependency registry or any cross-skill dependency as a normal prerequisite.
-- Name the supporting local `agents/**`, `references/**`, `assets/**`, or `scripts/**` paths that the skill relies on.
-- Use only local `agents/`, `references/`, `assets/`, or `scripts/` when they materially improve clarity.
-- If a skill names local support files, make the operator read the required ones before making a decision, routing work, dispatching, or declaring completion.
-- Make the output contract or asset record the difference between support files that were declared, actually read, and actually used.
-- Keep `Choose Assets` and `Choose References` aligned with live files, current decision types, and freshness expectations rather than copied legacy wording.
-- If a skill can dispatch or guide delegated work, make it name the exact local skill or skills the delegate should use.
-- If a skill expects reports from delegated work, make the asset or output contract record what local support files were instructed and what was actually used.
-- When a repo-local skill has absorbed behavior from a global or imported skill, keep the repo-local owner authoritative and remove duplicate trigger ambiguity where possible.
-- Explain where recurring lessons should be promoted:
-  - routing or decision rules -> skills
-  - execution order or gates -> skills
-  - role behavior -> local `agents/*.md`
-  - reusable coordination fields or checklists -> local `assets/*.md`
-- Keep the language imperative when the reader is expected to follow a sequence.
-- Do not turn a skill into a narrative about one past task.
+- Prefer strengthening the owning `SKILL.md`, `assets/*.md`, and `references/*.md` before adding new files.
+- Add new top-level owners only when an existing owner cannot absorb the rule without losing trigger clarity or output-contract force.
+- Keep support-file selection rules aligned with live files.
+- Make operator-facing records distinguish declared files, files read, and files used when the owner requires support files.
+- Keep language imperative when the operator is expected to execute a sequence or satisfy a gate.
+- Do not turn CANON files into run logs, changelogs, or narrative memory.
+
+## Closure Rules
+
+- Use explicit status semantics such as `partial`, `batched`, or `coverage-complete` instead of vague “done” claims.
+- Name deferred work when a family is only partially hardened.
+- When a closure claim depends on review, point to the concrete evaluation artifact or other auditable evidence.
 
 ## Scope Discipline
 
-- Edit only files inside `.codex/skills/**`.
-- Reference other `.codex` assets by path instead of copying their full contents.
-- Preserve concurrent edits in this subtree unless they directly conflict with the owned change.
+- Edit only files inside `CANON/**` when working under this subtree contract.
+- Preserve unrelated concurrent changes unless they directly conflict with the owned Canon change.
+- When scaffold parity is intended, sync `research-scaffold/CANON/` from the updated root Canon tree before publishing.

@@ -28,6 +28,7 @@ BEHAVIOR := {
   user_facing_change,
   critical_states,
   accessibility_impact,
+  comparable_experience_notes,
   keyboard_and_focus_notes,
   responsive_notes,
   component_responsibility
@@ -42,7 +43,7 @@ DELIVERY := {
 
 VERIFICATION := {
   command,
-  exact_output,
+  exact_output_or_precise_summary,
   result,
   performance_note,
   verification_owner
@@ -67,4 +68,5 @@ PASS IF
 FAIL IF
   SUPPORT.files_actually_used IS missing
   OR BEHAVIOR.accessibility_impact IS implicit
+  OR VERIFICATION.result IS implicit
 ```

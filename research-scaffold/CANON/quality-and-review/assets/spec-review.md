@@ -20,6 +20,10 @@ EVIDENCE := {
   smallest_high_value_verification_and_why,
   proof_freshness_or_evidence_gaps,
   behavior_covered,
+  comparable_experience_covered,
+  threshold_trigger_covered_when_release_or_monitoring_claim_exists,
+  threshold_action_covered_when_release_or_monitoring_claim_exists,
+  sustainability_decision_covered_when_material,
   coverage_blind_spots,
   performance_regression_relevance,
   docs_reviewed,
@@ -32,4 +36,11 @@ EVIDENCE := {
 }
 RISKS := { risks, open_questions }
 DECISION := { pass, fail, required_fixes, regression_handoff }
+
+FAIL IF
+  DECISION.pass = true AND EVIDENCE.proof_freshness_or_evidence_gaps IS unresolved
+  OR DECISION.pass = true AND EVIDENCE.comparable_experience_covered IS missing_when_user_facing
+  OR DECISION.pass = true AND EVIDENCE.threshold_trigger_covered_when_release_or_monitoring_claim_exists IS missing
+  OR DECISION.pass = true AND EVIDENCE.threshold_action_covered_when_release_or_monitoring_claim_exists IS missing
+  OR DECISION.pass = true AND EVIDENCE.sustainability_decision_covered_when_material IS missing
 ```

@@ -6,9 +6,13 @@
 - current mode:
 - change type:
 - risk level:
+- evidence timeframe:
 - observability ready:
 - alert coverage:
 - health-check coverage:
+- monitoring owner:
+- evidence source:
+- uncertainty label:
 - deployment path:
 - code-only versus rebuild path:
 - build location:
@@ -16,6 +20,10 @@
 - host memory budget:
 - swap or burst plan:
 - ingress and TLS status:
+- cheapest safe path chosen:
+- chosen rollout shape:
+- sustainability note when material:
+- sustainability decision or mitigation:
 
 ## Risk
 
@@ -23,8 +31,12 @@
 - mitigation:
 - rollback owner:
 - rollback path:
+- rollback trigger:
 - rollback verification:
 - follow-up owner:
+- next signal review time:
+- threshold trigger:
+- threshold action:
 - support path ready:
 
 ## Verification
@@ -36,3 +48,4 @@
 - before state:
 - after state:
 - result:
+- recovery verifier:

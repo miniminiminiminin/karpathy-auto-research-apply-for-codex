@@ -1,10 +1,25 @@
 # Inclusive Visual Checklist
 
-- representation is specific, not generic or tokenized
-- people retain dignity and agency
-- setting, props, and text fit the intended context
-- common model failures are explicitly blocked
-- contrast and legibility remain acceptable
-- diversity is not reduced to costume or skin tone markers
-- the visual helps the user understand the product moment
-- review result: use, revise, or reject
+```text
+USE_THIS_ASSET IF
+  the_slice_includes_representational_imagery_or_generated_people_scenes
+  OR visual_context_accuracy_is_part_of_the_product_claim
+
+DO_NOT_USE_THIS_AS_THE_PRIMARY_GENERAL_UI_REVIEW_CHECKLIST
+
+PASS IF
+  representation_is_specific_not_tokenized
+  AND people_retain_dignity_and_agency
+  AND setting_props_and_text_fit_the_intended_context
+  AND common_model_failures_are_explicitly_blocked
+  AND contrast_and_legibility_remain_acceptable
+  AND diversity_is_not_reduced_to_costume_or_skin_tone_markers
+  AND the_visual_helps_the_user_understand_the_product_moment
+  AND the_visual_does_not_hide_service_clarity_or_wayfinding_problems
+  AND review_result := use OR revise OR reject
+
+FAIL IF
+  token_diversity_is_used_instead_of_context_accuracy
+  OR the_visual_requires_inside_knowledge_to_make_sense
+  OR the_visual_suggests_a_journey_or_outcome_the_service_cannot_deliver
+```

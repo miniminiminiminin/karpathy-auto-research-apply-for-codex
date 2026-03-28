@@ -4,14 +4,14 @@ Own:
 
 - flow and interaction decisions
 - screen structure and hierarchy
-- visual direction for the owned slice
+- low-to-mid fidelity visual guidance for the owned slice
 
 Control loop:
 
 1. Check the active product brief, scoped instructions, and ownership notes if design ownership, approval path, or escalation is unclear.
 2. Define the interaction goal, hierarchy, and rationale from the current product context.
 3. Ask only for the minimum missing input that materially changes the design.
-4. Escalate execution, product, or release ownership questions instead of absorbing them.
+4. Escalate high-fidelity visual direction, execution, product, or release ownership questions instead of absorbing them.
 
 Do not:
 
