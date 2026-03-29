@@ -6,6 +6,9 @@
 - Proof path candidate checks: not yet recorded
 - Promotion gate: not yet recorded
 - Rollback trigger: not yet recorded
+- Design system master: not yet recorded
+- Design system page override: not yet recorded
+- Page override evidence source or fallback note: not yet recorded
 - Planner owner: not yet recorded
 - Executor owner: not yet recorded
 - Evaluator owner: not yet recorded

@@ -6,7 +6,10 @@ SUPPORT := {
   declared_references,
   files_read_before_decision,
   why_each_file_was_loaded,
-  files_actually_used
+  files_actually_used,
+  larger_workstream,
+  completed_this_session,
+  next_seam_to_continue
 }
 
 TARGET := {
@@ -17,6 +20,7 @@ TARGET := {
   current_state_evidence,
   current_risks_or_bottlenecks,
   target_state_framing,
+  conceptual_model_translation_notes,
   module_count_rationale,
   scaffold_shape,
   extension_points,
@@ -32,7 +36,11 @@ TARGET := {
   execution_plane,
   prompt_policy_plane,
   request_or_session_owner,
-  workspace_artifact_boundary
+  workspace_artifact_boundary,
+  recommendation_pipeline := input_classification + constrained_candidate_generation + ranking + anti_pattern_filter + output_package,
+  rule_source_and_version,
+  confidence_or_ambiguity_policy,
+  explanation_trace_contract
 }
 
 ALTERNATIVES := {
@@ -67,6 +75,8 @@ MIGRATION := {
 
 OBSERVABILITY := {
   seam_signals,
+  recommendation_quality_signal,
+  explanation_trace_samples,
   error_categories,
   graceful_failure_modes,
   essential_dependencies_that_must_not_split,
@@ -80,6 +90,7 @@ ACCEPTANCE := {
   entrypoint_and_dependency_direction,
   migration_or_compatibility_assumptions,
   streaming_and_cancel_contract,
+  fallback_behavior,
   acceptance_conditions,
   recommended_next_owner,
   next_skill
@@ -90,8 +101,12 @@ PASS IF
   AND SUPPORT.declared_references IS named_or_none
   AND SUPPORT.files_read_before_decision
   AND SUPPORT.why_each_file_was_loaded
+  AND SUPPORT.larger_workstream
+  AND SUPPORT.completed_this_session
+  AND SUPPORT.next_seam_to_continue
   AND TARGET.seam
   AND TARGET.current_state_evidence
+  AND conceptual_model_translation_requirement_is_consistent
   AND TARGET.module_count_rationale
   AND TARGET.scaffold_shape
   AND TARGET.split_trigger_for_large_or_multi_responsibility_units
@@ -107,7 +122,10 @@ PASS IF
 
 FAIL IF
   SUPPORT.files_actually_used IS missing
+  OR SUPPORT.completed_this_session IS missing
+  OR SUPPORT.next_seam_to_continue IS missing
   OR TARGET.current_state_evidence IS generic
+  OR conceptual_model_translation_requirement_is_inconsistent
   OR TARGET.module_count_rationale IS implicit
   OR TARGET.scaffold_shape IS implicit
   OR TARGET.split_trigger_for_large_or_multi_responsibility_units IS missing
@@ -119,4 +137,11 @@ FAIL IF
   OR OBSERVABILITY.graceful_failure_modes IS missing
   OR OBSERVABILITY.graceful_failure_modes IS generic
   OR OBSERVABILITY.acceptance_metrics IS missing
+
+conceptual_model_translation_requirement_is_consistent := PASS IF
+  TARGET.conceptual_model_translation_notes IS explicit_when_user_facing_structure_depends_on_internal_system_shape
+  OR user_facing_structure_is_not_driven_by_internal_system_shape
+
+conceptual_model_translation_requirement_is_inconsistent := PASS IF
+  TARGET.conceptual_model_translation_notes IS missing_when_user_facing_structure_depends_on_internal_system_shape
 ```

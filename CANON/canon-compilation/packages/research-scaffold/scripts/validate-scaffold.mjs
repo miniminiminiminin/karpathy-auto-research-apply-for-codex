@@ -70,6 +70,55 @@ async function hasIterationRecord(rootDir) {
   }
 }
 
+async function validateOptionalDesignSystem(rootDir, errors) {
+  const designSystemDir = path.join(rootDir, 'design-system');
+
+  try {
+    const designSystemStat = await fs.stat(designSystemDir);
+    if (!designSystemStat.isDirectory()) {
+      errors.push('design-system must be a directory when the optional persistence contract is present.');
+      return;
+    }
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return;
+    }
+
+    throw error;
+  }
+
+  const masterPath = path.join(designSystemDir, 'MASTER.md');
+  const pagesDir = path.join(designSystemDir, 'pages');
+
+  try {
+    const masterStat = await fs.stat(masterPath);
+    if (!masterStat.isFile()) {
+      errors.push('design-system/MASTER.md must be a file when design-system/ is present.');
+    }
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      errors.push('design-system/MASTER.md is required when design-system/ is present.');
+      return;
+    }
+
+    throw error;
+  }
+
+  try {
+    const pagesStat = await fs.stat(pagesDir);
+    if (!pagesStat.isDirectory()) {
+      errors.push('design-system/pages must be a directory when design-system/ is present.');
+    }
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      errors.push('design-system/pages is required when design-system/ is present.');
+      return;
+    }
+
+    throw error;
+  }
+}
+
 function isPlaceholder(value) {
   return !value || PLACEHOLDER_VALUES.has(value.toLowerCase());
 }
@@ -110,6 +159,8 @@ export async function validateScaffold(rootDir) {
   if (currentBlocker.includes('rubric not generated')) {
     errors.push('loop-status.md still reports "rubric not generated"; bootstrap cannot be treated as complete.');
   }
+
+  await validateOptionalDesignSystem(rootDir, errors);
 
   requirePlanField(plan, 'active slice', errors);
   requirePlanField(plan, 'proof path baseline', errors);

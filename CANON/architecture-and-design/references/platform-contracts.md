@@ -6,9 +6,13 @@ MINIMUM_CONTRACT_RECORD := {
   consumers,
   current_state_evidence,
   target_state_framing,
+  rule_source_and_version,
+  selection_pipeline,
+  confidence_or_ambiguity_policy,
   allowed_dependency_direction,
   compatibility_expectations,
   observability_hooks,
+  explanation_trace_contract,
   migration_path,
   rollback_notes,
   activation_events_and_host_entrypoints,
@@ -17,6 +21,7 @@ MINIMUM_CONTRACT_RECORD := {
   artifact_storage_location,
   artifact_classes_readers_writers_and_lifecycle,
   failure_behavior,
+  fallback_behavior,
   execution_model_compatibility_expectations
 }
 

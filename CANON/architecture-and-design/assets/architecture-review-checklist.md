@@ -17,6 +17,10 @@ PASS IF
   AND graceful_failure_for_the_real_seam_is_specific
   AND consumers_and_owners_are_explicit
   AND observability_baseline_is_specific
+  AND recommendation_pipeline_is_explicit_when_the_seam_selects_among_candidates
+  AND rule_source_and_version_are_explicit_when_recommendation_rules_drive_output
+  AND fallback_behavior_is_defined_when_confidence_or_input_clarity_is_low
+  AND explanation_trace_is_explicit_when_ranking_or_filtering_logic_changes_output
   AND rollback_trigger_and_owner_are_defined
   AND next_implementation_skill_is_named
 
@@ -30,6 +34,9 @@ FAIL IF
   OR dependency_direction_is_missing
   OR graceful_failure_is_generic
   OR observability_baseline_is_generic
+  OR recommendation_ranking_logic_is_implicit_when_the_seam_is_recommendation_driven
+  OR fallback_behavior_is_missing_when_ambiguity_or_low_confidence_is_possible
+  OR explanation_trace_contract_is_missing_when_filtering_or_ranking_logic_is_material
   OR rollback_trigger_and_owner_are_missing
   OR next_implementation_skill_is_missing
 ```

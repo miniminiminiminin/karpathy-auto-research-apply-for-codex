@@ -5,6 +5,9 @@ PASS IF
   AND declared_references ARE named_or_none
   AND files_read_before_decision ARE explicit
   AND why_each_file_was_loaded IS explicit
+  AND larger_workstream IS explicit
+  AND completed_this_session IS explicit_when_work_was_done
+  AND next_seam_to_continue IS explicit_when_work_remains
   AND ship_candidate IS explicit
   AND risk_level IS explicit
   AND verification_status IS explicit
@@ -25,6 +28,9 @@ PASS IF
   AND threshold_trigger IS measurable_and_explicit_when_shipping_or_monitoring
   AND threshold_action IS explicit_and_trigger_bound_when_shipping_or_monitoring
   AND signal_threshold_matrix_is_explicit_when_shipping_or_monitoring_depends_on_runtime_signals
+  AND recommendation_fallback_path_is_explicit_when_output_is_rule_or_ranking_driven
+  AND recommendation_revalidation_trigger_is_explicit_when_rule_source_or_quality_signal_can_drift
+  AND recommendation_quality_regression_action_is_explicit_when_shipping_or_monitoring_depends_on_recommendation_output
   AND sustainability_materiality IS explicit
   AND sustainability_decision_matrix_is_explicit_when_operational_sustainability_is_plausibly_material
   AND sustainability_decision_class IS explicit_when_sustainability_note_is_material
@@ -34,6 +40,8 @@ PASS IF
 FAIL IF
   declared_assets ARE missing
   OR files_actually_used ARE missing
+  OR completed_this_session IS missing_when_work_was_done
+  OR next_seam_to_continue IS missing_when_work_remains
   OR ship_candidate IS missing
   OR verification_status IS implicit
   OR evidence_freshness_status IS stale_or_unknown
@@ -51,6 +59,9 @@ FAIL IF
   OR threshold_trigger IS missing_or_generic_when_shipping_or_monitoring
   OR threshold_action IS missing_or_unbound_when_shipping_or_monitoring
   OR signal_threshold_matrix_is_missing_when_shipping_or_monitoring_depends_on_runtime_signals
+  OR recommendation_fallback_path_is_missing_when_output_is_rule_or_ranking_driven
+  OR recommendation_revalidation_trigger_is_missing_when_rule_source_or_quality_signal_can_drift
+  OR recommendation_quality_regression_action_is_missing_when_shipping_or_monitoring_depends_on_recommendation_output
   OR sustainability_materiality IS implicit
   OR sustainability_decision_matrix_is_missing_when_operational_sustainability_is_plausibly_material
   OR sustainability_decision_class IS missing_when_sustainability_note_is_material
@@ -64,6 +75,9 @@ FAIL IF
 - files read before decision:
 - why each file was loaded:
 - files actually used:
+- larger workstream:
+- completed this session:
+- next seam to continue:
 
 ## Candidate
 
@@ -131,4 +145,7 @@ Candidate.base_branch_or_merge_target := named merge target or review target
 - threshold trigger:
 - threshold action:
 - signal threshold matrix reviewed:
+- recommendation fallback path:
+- recommendation revalidation trigger:
+- recommendation quality regression action:
 - next update time:

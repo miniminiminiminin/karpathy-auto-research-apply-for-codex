@@ -9,6 +9,7 @@ PASS IF
   AND secondary_context_is_softened_before_extra_decoration_is_added
   AND typography_scale_and_weight_roles_are_repeatable
   AND color_has_semantic_discipline_not_random_accenting
+  AND personality_signals_are_consistent_across(type_voice, color_temperature, surface_depth, motion_intensity)
   AND essential_state_meaning_survives_without_color_only_signals
   AND spacing_and_density_support_grouping_and_scanability
   AND state_surfaces_for(empty, loading, error, blocked)_feel_intentional_not_afterthought
@@ -18,6 +19,7 @@ PASS IF
   AND user_can_still_understand_and_operate_the_slice_when_motion_or_emphasis_is_reduced
   AND the_interface_would_still_work_if_extra_visual_flourish_were_removed
   AND product_or_service_clarity_is_not_being_faked_by_visual_novelty
+  AND anti_pattern_constraints_are_explicit_and_tied_to(task_clarity, trust, or recovery_visibility)
   AND implementation_notes_are_specific_enough_to_prevent_generic_fallbacks
   AND failed_items = none
 
@@ -30,6 +32,8 @@ FAIL IF
   OR service_or_flow_logic_has_been_pulled_into_visual_rules_instead_of_product_direction
   OR default_component_styling_is_untouched_where_the_slice_claims_custom_direction
   OR the_screen_only_looks_good_in_one_static_state
+  OR style_novelty_is_doing_work_that_hierarchy_or_copy_should_do
+  OR personality_signals_conflict_or_cancel_each_other
   OR any_relevant_state_or_breakpoint_was_not_reviewed
   OR disposition = approve AND blockers_remaining != none
 

@@ -152,3 +152,39 @@ test('passes when scaffold state satisfies the minimum execution gates', async (
 
   assert.deepEqual(result, { ok: true, errors: [] });
 });
+
+test('passes when the optional design-system contract is absent', async () => {
+  const scaffoldRoot = await makeScaffold({
+    'rubric.txt': '# Rubric\n\n- fixed scoring shape\n',
+  });
+
+  const result = await validateScaffold(scaffoldRoot);
+
+  assert.equal(result.ok, false);
+  assert.doesNotMatch(result.errors.join('\n'), /design-system/);
+});
+
+test('fails when design-system is present without MASTER.md', async () => {
+  const scaffoldRoot = await makeScaffold({
+    'rubric.txt': '# Rubric\n\n- fixed scoring shape\n',
+    'design-system/pages/checkout.md': '# Checkout Override\n',
+  });
+
+  const result = await validateScaffold(scaffoldRoot);
+
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /design-system\/MASTER\.md/);
+});
+
+test('passes when the optional design-system contract is structurally complete', async () => {
+  const scaffoldRoot = await makeScaffold({
+    'rubric.txt': '# Rubric\n\n- fixed scoring shape\n',
+    'design-system/MASTER.md': '# Design System Master\n',
+    'design-system/pages/README.md': '# pages\n',
+  });
+
+  const result = await validateScaffold(scaffoldRoot);
+
+  assert.equal(result.ok, false);
+  assert.doesNotMatch(result.errors.join('\n'), /design-system/);
+});

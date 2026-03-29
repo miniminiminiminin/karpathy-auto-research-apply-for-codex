@@ -22,7 +22,8 @@ TOKENS := {
   spacing_rhythm,
   variation_budget,
   surface_or_elevation_roles,
-  imagery_policy
+  imagery_policy,
+  personality_lever_mapping
 }
 
 SURFACES := {
@@ -44,9 +45,11 @@ STATE_MATRIX := {
 STATE_BEHAVIOR := {
   primary_action_per_state,
   next_step_or_recovery_visibility_per_state,
+  non_color_state_signal_per_state,
   status_accuracy_proof,
   decision_rationale_visibility_when_system_decides,
-  human_help_entrypoint_when_relevant
+  human_help_entrypoint_when_relevant,
+  hierarchy_survival_rule_per_state
 }
 
 BREAKPOINT_MATRIX := {
@@ -66,6 +69,7 @@ IMPLEMENTATION := {
   user_controls_preserved := zoom_motion_scaling_notification_controls,
   do_examples,
   dont_examples,
+  anti_pattern_translation_example,
   unresolved_risks
 }
 

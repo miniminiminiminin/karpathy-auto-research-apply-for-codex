@@ -22,9 +22,10 @@ Every iteration should improve the project in service of `purpose.txt`.
 4. Lock `rubric.txt` for the rest of the continuous run.
 5. Run `node CANON/canon-compilation/packages/research-scaffold/scripts/validate-scaffold.mjs <downstream-root>` and fix every reported gate failure before execution.
 6. Use `plan.md` and `loop-status.md` to define the active slice and role boundaries.
-7. Run planner -> executor -> evaluator -> memory loops.
-8. Record each iteration in `iterations/` and summarize it in `results.tsv`.
-9. Route to release only when the project is ready enough to stop iterating.
+7. If the active slice is UI-facing and `design-system/` exists, record which master file and page override the slice should consult.
+8. Run planner -> executor -> evaluator -> memory loops.
+9. Record each iteration in `iterations/` and summarize it in `results.tsv`.
+10. Route to release only when the project is ready enough to stop iterating.
 
 ## Control-Plane Files
 
@@ -32,11 +33,24 @@ Every iteration should improve the project in service of `purpose.txt`.
 - `rubric.txt`: immutable run rubric once created
 - `plan.md`: current approved execution plan
 - `loop-status.md`: stage, active iteration, next owner, and current blocker
+- `design-system/MASTER.md`: optional global design-rule record for UI-facing projects
+- `design-system/pages/<page>.md`: optional page-specific overrides that record only deviations from the master file
 - `iterations/`: one file per iteration
 - `results.tsv`: compact iteration history
 - `run.log`: execution evidence
 - `score.log`: scoring evidence
 - `notes.md`: cross-iteration notes, ideas, and failure memory candidates
+
+## Optional Design-System Persistence Contract
+
+Use this surface only when the downstream project has a meaningful UI or UX seam that benefits from stable design guidance across iterations.
+
+- `design-system/MASTER.md` holds cross-page defaults such as design principles, tokens, component rules, and other global decisions.
+- `design-system/pages/<page>.md` holds page-level deviations from the master file and should not restate unchanged global rules.
+- page overrides should explain why the page deviates, what evidence justified the deviation, and what fallback to use if the evidence is weak or later invalidated.
+- retrieval order is: page override first, then `design-system/MASTER.md`, then the normal Canon routing flow for anything still undecided.
+- this is a control-plane artifact, not product code and not a replacement for local `CANON/` authority.
+- if the project does not need persistent design guidance, leave this surface unused and continue the normal loop.
 
 ## Validation Gate
 
@@ -60,6 +74,7 @@ The validator is intentionally narrow. It checks that Canon's minimum control-pl
 - `plan.md` names the active slice, proof path, and planner/executor/evaluator owners
 - iteration evidence exists once execution has started
 - `run.log`, `score.log`, and `results.tsv` contain actual evidence after execution starts
+- if `design-system/` exists, the optional persistence contract is structurally complete enough to use safely
 
 ## Evaluation Tools
 
@@ -180,6 +195,9 @@ Use these snippets if you need a concrete starting point.
 - Proof path candidate checks: run checks tied to the changed seam only
 - Promotion gate: require gate checks plus rubric threshold
 - Rollback trigger: define one clear revert condition
+- Design system master: design-system/MASTER.md or not used
+- Design system page override: design-system/pages/<page>.md or not used
+- Page override evidence or fallback note: named or not used
 - Planner owner: planner
 - Executor owner: executor
 - Evaluator owner: evaluator
