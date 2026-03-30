@@ -1,0 +1,20 @@
+## Blogs
+- [Signal v. noise: design](https://signalvnoise.com/design): The UX section of Signal v. noise site.
+- [Smashing Magazine](http://www.smashingmagazine.com/category/uxdesign/): An UX section of Smashing Magazine; 
+- [UX Booth](http://www.uxbooth.com/): A publication by and for the user experience community.
+- [UX Movement](http://uxmovement.com/): An UX blog that publishes articles showing how good and bad interface design practices affect user behavior.
+- [InvisionApp Blog](http://blog.invisionapp.com/): A blog by invisionApp.
+- [Designmodo](http://designmodo.com/design/ux-design/): Blogposts about UX disciplines.
+- [UX Mag](http://uxmag.com/): A virtual magazine about UX.
+- [UX Pin](http://blog.uxpin.com/): UX Pin blog.
+- [Johnny Holland](http://johnnyholland.org/): Johnny Holland's Blog;
+- [Inspire UX](http://www.inspireux.com/):  inspireUX focuses on the impact that User Experience has on people, business, and the world.
+- [Akendi Blog](http://akendi.com/blog/general-ux/): The Official Akendi's blog.
+- [Fool Proof](http://www.foolproof.co.uk/thinking/): Watching for new behaviours and sharing what we learn
+- [Usability Geek](http://usabilitygeek.com/): A blog to evangelize about the importance of website usability.
+- [Usabilla](http://blog.usabilla.com/):  A blog by Usabilla.
+- [52 Weeks of UX](http://52weeksofux.com/): A discourse on the process of designing for real people.
+- [Usability Post](http://usabilitypost.com/): Thoughts on design and user experience by Dmitry Fadeyev
+- [UX Apprentice](http://www.uxapprentice.com/): Intrigued by the process of UX design? Want to learn the basics? This is the right place!
+- [Usability.gov](http://www.usability.gov/): A Site by USA government about usability;
+- [UX DesignEdge](http://www.uxdesignedge.com/blog): A blog by UXDesignEdge;
