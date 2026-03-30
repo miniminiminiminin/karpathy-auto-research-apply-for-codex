@@ -111,3 +111,48 @@ The original research-loop shape was useful but incomplete for application deliv
 - add domain-specific rubric generation variants for frontend, backend, and agentic tool projects
 - add example downstream projects that show multiple full planner/executor/evaluator iterations
 - add machine-readable iteration summaries next to `results.tsv`
+
+## UX Library CLI
+
+This repository now includes a small CLI for collecting rendered web content or GitHub README content into Markdown under `resources/`.
+
+### Install
+
+```bash
+npm install
+```
+
+If you want rendered page capture through Playwright, install the browser once:
+
+```bash
+npx playwright install chromium
+```
+
+### Commands
+
+Capture a rendered page into the default `resources/` root:
+
+```bash
+ux-library capture-url https://example.com --collection smoke-test
+```
+
+Capture a GitHub repository or a local clone and split top-level sections into separate Markdown files:
+
+```bash
+ux-library capture-github https://github.com/batoreh/awesome-ux.git --collection ux/awesome-ux --split-sections
+ux-library capture-github /tmp/awesome-ux --collection ux/awesome-ux --split-sections
+```
+
+### Output Shape
+
+- default root: `resources/`
+- override root: `--out <absolute-or-relative-path>`
+- collection path: `resources/<collection>/`
+- per-capture files:
+  - `index.md`
+  - `meta.json`
+  - `sections/*.md` when `--split-sections` is enabled
+
+### Initial UX Library Slice
+
+The first curated library import lives under `resources/ux/awesome-ux/`. It was produced from the `awesome-ux` repository README after removing the table of contents and normalizing broken markdown so the remaining files are closer to a usable reference shelf than a raw repository mirror.

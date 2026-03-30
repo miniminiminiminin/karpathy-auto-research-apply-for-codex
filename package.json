@@ -1,0 +1,17 @@
+{
+  "name": "ux-library-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ux-library": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "playwright": "^1.58.2",
+    "turndown": "^7.2.2"
+  }
+}
