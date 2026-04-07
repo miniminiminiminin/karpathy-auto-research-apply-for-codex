@@ -31,6 +31,7 @@ BEHAVIOR := {
   user_facing_change,
   critical_states,
   accessibility_impact,
+  pre_delivery_checklist_outcome_when_relevant,
   comparable_experience_notes,
   keyboard_and_focus_notes,
   responsive_notes,
@@ -51,6 +52,8 @@ VERIFICATION := {
   command,
   exact_output_or_precise_summary,
   result,
+  interactive_affordance_check_when_relevant,
+  contrast_verification_note_when_relevant,
   performance_note,
   verification_owner
 }

@@ -6,7 +6,10 @@ SUPPORT := {
   declared_references,
   files_read_before_direction,
   why_each_file_was_loaded,
-  files_actually_used
+  files_actually_used,
+  larger_workstream,
+  completed_this_session,
+  next_seam_to_continue
 }
 
 SLICE := {
@@ -36,18 +39,25 @@ HIERARCHY := {
 
 SYSTEM := {
   typography_strategy,
+  typography_mood_and_constraints,
   color_strategy,
+  semantic_color_intent,
   spacing_rhythm,
   variation_budget,
+  personality_levers := { type_voice, color_temperature, surface_depth, motion_intensity },
+  pattern_selection_rationale,
+  tone_and_trust_target,
   surface_and_elevation_style,
   imagery_or_illustration_policy,
   state_expression_strategy,
   essential_meaning_without_color_only,
-  motion_or_emphasis_control_rules
+  motion_or_emphasis_control_rules,
+  motion_bounds_and_reduced_motion_fallback
 }
 
 GUARDRAILS := {
   avoid_list,
+  anti_pattern_constraints,
   generic_ui_failure_modes,
   accessibility_and_contrast_notes,
   implementation_survival_notes,
@@ -85,6 +95,9 @@ DECISION := {
 
 PASS IF
   SUPPORT.files_actually_used IS named
+  AND SUPPORT.larger_workstream
+  AND SUPPORT.completed_this_session
+  AND SUPPORT.next_seam_to_continue
   AND HIERARCHY.primary_focus
   AND HIERARCHY.primary_action_strategy
   AND SYSTEM.typography_strategy
@@ -100,6 +113,8 @@ FAIL IF
   approval_status = approved AND APPROVAL_EVIDENCE.open_blockers != none
   OR approval_status = approved AND APPROVAL_EVIDENCE.approval_mode IS missing
   OR APPROVAL_EVIDENCE.approval_mode = independent_review AND APPROVAL_EVIDENCE.approver_role = APPROVAL_EVIDENCE.author_role
+  OR SUPPORT.completed_this_session IS missing
+  OR SUPPORT.next_seam_to_continue IS missing
   OR principle_remains_adjective_only
   OR owner_boundary_note IS missing
   OR upstream_product_direction_reference IS missing_when_visualizing_service_or_flow_rules

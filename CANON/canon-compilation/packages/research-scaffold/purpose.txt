@@ -1,0 +1,1 @@
+[Describe the application goal in plain language. Include what success looks like, what "better" means, and the main constraints the loop must respect.]

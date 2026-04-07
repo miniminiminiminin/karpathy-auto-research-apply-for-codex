@@ -34,6 +34,10 @@ Do not route implementation guidance forward until the direction package has bee
 Questions come before methods. State the question, segment scope, evidence strength, and limitations before turning research, feedback, or content direction into product guidance.
 </NON-NEGOTIABLE>
 
+<REFERENCE-GATE>
+If missing external evidence, prior art, or source decomposition can materially change the direction, stop and route to `canon-compilation` instead of improvising from memory.
+</REFERENCE-GATE>
+
 <ANTI-PATTERN>
 Do not confuse trend narration, user quotes, brand adjectives, or "good UX instincts" with a usable product decision.
 </ANTI-PATTERN>
@@ -87,11 +91,14 @@ STEP_6 := decompose_into_subprojects IF project_is_too_large_for_one_direction_p
 STEP_7 := ask(one_question_at_a_time)
 STEP_8 := name(decision_question, evidence_mode)
 STEP_9 := define(segment_scope, evidence_strength, limitations, contradictory_signals)
+STEP_9A := ROUTE -> canon-compilation IF missing_external_evidence_or_reference_decomposition_materially_changes_direction
 STEP_10 := compare(2_to_3_approaches, recommended_direction, avoid_list)
 STEP_11 := present(design_sections_scaled_to_complexity)
 STEP_12 := get_user_or_named_approval_owner_review_after_each_section
 STEP_13 := translate(signals -> tradeoffs, service_outcome_rules, recommended_direction, avoid_list, remaining_uncertainty)
-STEP_14 := record(service_purpose, expectation_setting, assistance_path, no_dead_end_handling, comparable_experience_risk, decision_explanation_rules)
+STEP_14 := record(service_purpose, expectation_setting, assistance_path, no_dead_end_handling, comparable_experience_risk, decision_explanation_rules, findability_failure_risk, terminology_mismatch_risk, mental_model_fit_risk, research_cadence_fit_when_research_is_used)
+STEP_14A := record(bounded_design_system_brief_inputs, avoid_patterns, trust_and_mode_strategy) WHEN direction_must_resolve_into_ui_rules
+STEP_14B := record(message_trust_target, reasons_to_believe_mapping, promise_scope_boundary, anti_pattern_constraints) WHEN seam = message_architecture
 STEP_15 := record(direction_approval_status, approval_owner, approval_notes)
 STEP_16 := package(minimum_guidance)
 
@@ -132,10 +139,12 @@ ELSE STOP("choose the asset that matches the actual evidence mode")
 ## Choose References
 
 ```text
-IF evidence_mode = research THEN READ -> references/ux-research-methods.md
+IF evidence_mode = research AND search_findability_or_terminology_mismatch_is_the_main_risk THEN READ -> references/ux-research-methods.md OR references/service-outcome-principles.md OR references/structure-navigation-and-wayfinding-patterns.md
+ELSE IF evidence_mode = research THEN READ -> references/ux-research-methods.md
 ELSE IF evidence_mode = feedback OR evidence_mode = support THEN READ -> references/feedback-synthesis-framework.md OR references/support-signal-synthesis.md
 ELSE IF evidence_mode = trend OR evidence_mode = competitive THEN READ -> references/trend-research-rubric.md
 ELSE IF service_clarity_or_flow_continuity_is_the_main_risk THEN READ -> references/service-outcome-principles.md
+ELSE IF search_findability_or_terminology_mismatch_is_the_main_risk THEN READ -> references/service-outcome-principles.md OR references/structure-navigation-and-wayfinding-patterns.md
 ELSE IF direction_must_resolve_into_ui_rules THEN READ -> references/design-system-methodology.md OR references/mobile-first-experience-principles.md OR references/interaction-accessibility-principles.md OR references/ui-ideation-prompt-patterns.md
 ELSE IF direction_is_still_low_fidelity_or_flow_shaping OR hierarchy_or_state_clarity_is_unproven THEN READ -> references/wireframe-discipline.md
 ELSE IF visual_inputs_must_be_distilled_into_reusable_rules THEN READ -> references/design-system-extraction.md
@@ -157,11 +166,17 @@ Return a product and UX brief with:
 - service purpose and promise
 - expectation-setting notes
 - no-dead-end handling
+- findability notes
+- terminology mismatch risk
+- mental model fit risk
 - assistance path
 - decision explanation rules
 - comparable experience risk
 - what to avoid
 - remaining uncertainty
+- larger workstream
+- completed this session
+- next seam to continue
 - design sections reviewed and approval status
 - next skill
 - files actually used

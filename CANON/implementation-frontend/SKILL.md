@@ -126,6 +126,7 @@ VERIFY FROM user_facing_seam USING(
   targeted_tests,
   interaction_proof,
   accessibility_checks,
+  pre_delivery_checklist_when_hover_focus_motion_affordance_or_contrast_risk_exists,
   responsive_checks,
   token_handoff_checks,
   media_contrast_checks
@@ -147,7 +148,7 @@ STOP("frontend delivery note is ready")
 ## Choose Assets
 
 - `IF default_delivery_note THEN START -> assets/frontend-handoff.md`
-- `IF behavior_or_visual_acceptance_is_the_gate THEN START -> assets/ui-review-checklist.md`
+- `IF behavior_or_visual_acceptance_is_the_gate OR hover_focus_motion_affordance_or_contrast_risk_exists THEN START -> assets/ui-review-checklist.md`
 - `IF state_coverage_is_the_highest_risk THEN START -> assets/component-state-checklist.md`
 - `IF seam_is_known_but_behavior_and_proof_need_a_build_brief THEN START -> assets/frontend-implementation-brief.md`
 
